@@ -1,11 +1,11 @@
 package aula02_fundamentals;
 
-class MainAula02Fundamentals {
+class MainAula02 {
     private static Aviao boeing777X;
 
     public static void main(String[] args) throws Exception {
-        Motor motorDireito = new Motor("General Electric GE9X",50.0f,true);
-        Motor motorEsquerdo = new Motor("General Electric GE9X",50.0f,true);
+        Motor motorDireito = new MotorTurbinado("General Electric GE9X",50.0f,true);
+        Motor motorEsquerdo = new MotorTurbinado("General Electric GE9X",50.0f,true);
 
         boeing777X = new Aviao("Fooker DR1", "Freitherr", motorDireito, motorEsquerdo);
 
@@ -14,7 +14,6 @@ class MainAula02Fundamentals {
         Passageiro p3 = new Passageiro("Ana Rosa","Vinente Monteiro", "685.250.420-91");
         Passageiro p4 = new Passageiro("João Gabriel","Vinente Monteiro", "524.154.264-97");
         Passageiro p5 = new Passageiro("Ana Maria","Monteiro Bezerra", "975.462.252-00");
-
         boeing777X.adicionarPassageiro(p1);
         boeing777X.adicionarPassageiro(p2);
         boeing777X.adicionarPassageiro(p3);

@@ -1,9 +1,7 @@
 package aula02_fundamentals;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Aviao {
     private String modelo;
@@ -25,7 +23,7 @@ public class Aviao {
     }
 
     public void desembarcarPassageiros() {
-        if (getVelocidade() != 0.0f) {
+        if (getVelocidade() > 0) {
             System.out.println("Protocolos de segurança não permitem embarques com a aeronave em movimento");
         } else {
             listaPassageiros.forEach(p -> {
@@ -55,7 +53,7 @@ public class Aviao {
     }
 
     public boolean adicionarPassageiro(Passageiro passageiro) {
-        if (getVelocidade() != 0.0f) {
+        if (getVelocidade() > 0) {
             System.out.println("Protocolos de segurança não permitem embarques com a aeronave em movimento");
             return false;
         }
@@ -84,7 +82,7 @@ public class Aviao {
     public void acelerar() {
         if (getEstadoMotor()) {
             setVelocidade(getVelocidade() + getPotenciaMotor());
-            System.out.println("Avião a " + getVelocidade() + " km/h");
+            System.out.printf("Avião a %2.0f km/h\n", getVelocidade());
         } else {
             System.out.println("ERRO: Motor desligado");
         }
@@ -93,10 +91,10 @@ public class Aviao {
 
     public void desacelerar() {
         if (getEstadoMotor()) {
-            if (getVelocidade() > 0.0f) {
+            if (getVelocidade() > 0) {
                 setVelocidade(getVelocidade() - getPotenciaMotor());
             }
-            System.out.println("Avião a " + getVelocidade() + " km/h");
+            System.out.printf("Avião a %2.0f km/h\n", getVelocidade());
         } else {
             System.out.println("ERRO: Motor desligado");
         }
@@ -104,8 +102,8 @@ public class Aviao {
     }
 
     public float getPotenciaMotor() {
-        float potenciaDireito = motorDireito.isAtivo() ? motorDireito.getPotencia() : 0.0f;
-        float potenciaEsquerdo = motorEsquerdo.isAtivo() ? motorEsquerdo.getPotencia() : 0.0f;
+        long potenciaDireito = motorDireito.isAtivo() ? (long) motorDireito.getPotencia() : 0;
+        long potenciaEsquerdo = motorEsquerdo.isAtivo() ? (long) motorEsquerdo.getPotencia() : 0;
         return potenciaDireito + potenciaEsquerdo;
     }
 
@@ -168,7 +166,7 @@ public class Aviao {
     }
 
     public float getVelocidade() {
-        return velocidade;
+        return Float.valueOf(velocidade).intValue();
     }
 
     public void setVelocidade(float velocidade) {
