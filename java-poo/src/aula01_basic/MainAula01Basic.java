@@ -1,6 +1,6 @@
-package aula01;
+package aula01_basic;
 
-class Main{
+class MainAula01Basic {
     public static void main(String[] args) {
         Aviao baraoVermelho = new Aviao("Fooker DR1", "Freitherr");
         baraoVermelho.imprimirOk();

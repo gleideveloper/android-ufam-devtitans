@@ -1,4 +1,4 @@
-package aula01;
+package aula01_basic;
 
 public class Aviao {
     private String modelo;
@@ -10,7 +10,6 @@ public class Aviao {
 
     public Aviao(String modelo, String identificador) {
         this.setModelo(modelo);
-        ;
         this.setIdentificador(identificador);
         this.setMotor(false);
         this.setAltura(0.0f);
