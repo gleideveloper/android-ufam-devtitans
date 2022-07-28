@@ -25,21 +25,24 @@ class MainAula02Fundamentals {
         Passageiro fulando = boeing777X.buscarPassageiroPorCPF("685.250.420-91");
         System.out.println("Passageiro localizado: " + fulando.getNome() + " " + fulando.getSobreNome());
 
-        System.out.println("\n----------- Aeronave em voo ------------");
-        passo33();
         System.out.println("\n----------- Lista de Embarque -----------");
         boeing777X.imprimirListaDePassageiros();
-        /*System.out.println("\n----------- Lista de Desembarque -----------");
-        boeing777X.desembarcarPassageiros();*/
+        System.out.println("\n----------- Aeronave em voo ------------");
+        aviaoDecolando(5);
+        aviaoPousando(5);
+        System.out.println("\n----------- Lista de Desembarque -----------");
+        boeing777X.desembarcarPassageiros();
 
     }
-    public static void passo33(){
+    public static void aviaoDecolando(int acerelar){
         boeing777X.ligarMotor();
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= acerelar; i++) {
             //System.out.println("Aceleração Nº" + i);
             boeing777X.acelerar();
         }
-        for (int j = 1; j <= 5; j++) {
+    }
+    public static void aviaoPousando(int desacelerar){
+        for (int j = 1; j <= desacelerar; j++) {
             //System.out.println("Desaceleração Nº" + j);
             boeing777X.desacelerar();
         }

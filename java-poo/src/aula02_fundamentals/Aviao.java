@@ -1,7 +1,9 @@
 package aula02_fundamentals;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Aviao {
     private String modelo;
@@ -22,20 +24,21 @@ public class Aviao {
         listaPassageiros = new ArrayList<>();
     }
 
-    public void desembarcarPassageiros(){
-        listaPassageiros.forEach(p -> {
-            if (getVelocidade() == 0.0f){
+    public void desembarcarPassageiros() {
+        if (getVelocidade() != 0.0f) {
+            System.out.println("Protocolos de segurança não permitem embarques com a aeronave em movimento");
+        } else {
+            listaPassageiros.forEach(p -> {
                 System.out.println(p.getNome() + " " + p.getSobreNome() + " desembarcou da aeronave!");
-            }else{
-                System.out.println("Protocolos de segurança não permitem embarques com a aeronave em movimento");
-            }
-        });
-        listaPassageiros.removeAll(getListaPassageiros());
+            });
+            listaPassageiros.removeAll(getListaPassageiros());
+        }
     }
+
     public void imprimirListaDePassageiros() {
         listaPassageiros.forEach(p -> System.out.println(
                 "Nome Completo: " + p.getNome() + " " + p.getSobreNome() +
-                 "\nCPF: " + p.getCpf()
+                        "\nCPF: " + p.getCpf()
         ));
     }
 
@@ -112,11 +115,11 @@ public class Aviao {
 
     public void imprimeEstadoMotor() {
         if (getEstadoMotor()) {
-            if(motorEsquerdo.isAtivo() && motorDireito.isAtivo()){
+            if (motorEsquerdo.isAtivo() && motorDireito.isAtivo()) {
                 System.out.println("Os motores estão ligados..");
-            }else if (motorDireito.isAtivo()) {
+            } else if (motorDireito.isAtivo()) {
                 System.out.println("Somente o motor Direito está ligado");
-            }else if (motorEsquerdo.isAtivo()) {
+            } else if (motorEsquerdo.isAtivo()) {
                 System.out.println("Somente o motor Esquerdo está ligado");
             }
         } else {
