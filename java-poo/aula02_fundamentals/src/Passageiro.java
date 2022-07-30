@@ -1,5 +1,3 @@
-package aula02_fundamentals;
-
 public class Passageiro {
     private String nome;
     private String sobreNome;

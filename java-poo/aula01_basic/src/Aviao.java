@@ -1,5 +1,3 @@
-package aula01_basic;
-
 public class Aviao {
     private String modelo;
     private String identificador;

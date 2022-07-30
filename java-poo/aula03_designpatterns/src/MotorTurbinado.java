@@ -1,5 +1,3 @@
-package aula03_designpatterns;
-
 public class MotorTurbinado extends Motor{
     public MotorTurbinado(String modelo, float potencia, boolean ativo) {
         super(modelo, potencia, ativo);

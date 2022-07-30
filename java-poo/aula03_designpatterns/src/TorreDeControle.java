@@ -1,5 +1,3 @@
-package aula03_designpatterns;
-
 import java.util.Observable;
 import java.util.Observer;
 

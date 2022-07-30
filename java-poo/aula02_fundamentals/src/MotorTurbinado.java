@@ -1,5 +1,3 @@
-package aula02_fundamentals;
-
 public class MotorTurbinado extends Motor {
     public MotorTurbinado(String modelo, float potencia) {
         super(modelo, potencia);

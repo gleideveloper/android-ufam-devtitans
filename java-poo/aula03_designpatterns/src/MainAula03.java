@@ -1,6 +1,3 @@
-package aula03_designpatterns;
-
-
 public class MainAula03 {
     private static Aviao boeing737Max;
 

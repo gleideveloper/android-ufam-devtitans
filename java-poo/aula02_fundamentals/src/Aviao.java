@@ -1,5 +1,3 @@
-package aula02_fundamentals;
-
 import java.util.ArrayList;
 import java.util.List;
 

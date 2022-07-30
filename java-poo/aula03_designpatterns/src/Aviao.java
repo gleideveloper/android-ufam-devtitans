@@ -1,5 +1,3 @@
-package aula03_designpatterns;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;

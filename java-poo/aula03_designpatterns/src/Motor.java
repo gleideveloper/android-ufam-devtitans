@@ -1,21 +1,21 @@
-package aula02_fundamentals;
-
-public class Motor {
+public class Motor implements Motorizavel{
     private String modelo;
     private float potencia;
-    private boolean ativo;
+    private boolean ativo = false;
 
-    public Motor(String modelo, float potencia) {
+    public Motor(String modelo, float potencia, boolean ativo) {
         this.setModelo(modelo);
         this.setPotencia(potencia);
-        this.setAtivo(false);
+        this.setAtivo(ativo);
     }
 
+    @Override
     public void ligar(){
         setAtivo(true);
         System.out.println("......VRUMMMM!!");
     }
 
+    @Override
     public void desligar(){
         setAtivo(false);
         System.out.println("mmmmm……..");
@@ -29,16 +29,18 @@ public class Motor {
         this.modelo = modelo;
     }
 
+    @Override
+    public boolean getAtivo() {
+        return false;
+    }
+
+    @Override
     public float getPotencia() {
         return potencia;
     }
 
     public void setPotencia(float potencia) {
         this.potencia = potencia;
-    }
-
-    public boolean isAtivo() {
-        return ativo;
     }
 
     public void setAtivo(boolean ativo) {

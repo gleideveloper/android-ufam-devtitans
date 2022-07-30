@@ -1,5 +1,3 @@
-package aula03_designpatterns;
-
 public class Passageiro {
     private String nome;
     private String sobreNome;

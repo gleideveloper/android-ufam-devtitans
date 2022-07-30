@@ -1,5 +1,3 @@
-package aula02_fundamentals;
-
 class MainAula02 {
     private static Aviao boeing777X;
 

@@ -1,5 +1,3 @@
-package aula01_basic;
-
 class MainAula01 {
     public static void main(String[] args) {
         Aviao baraoVermelho = new Aviao("Fooker DR1", "Freitherr");
@@ -20,23 +18,10 @@ class MainAula01 {
         baraoVermelho.imprimeEstadoMotor();
         baraoVermelho.desligarMotor();
         baraoVermelho.imprimeEstadoMotor();
-        
-        System.out.println("----------------------------");
-        baraoVermelho.ligarMotor();
-        baraoVermelho.acelerar();
-        baraoVermelho.acelerar();
-        baraoVermelho.desligarMotor();
-        baraoVermelho.acelerar();
 
         System.out.println("----------------------------");
         baraoVermelho.ligarMotor();
-        baraoVermelho.desacelerar();
-        baraoVermelho.desacelerar();
-        baraoVermelho.desacelerar();
-        baraoVermelho.desligarMotor();
-        baraoVermelho.desacelerar();
-        System.out.println("----------------------------");
-        baraoVermelho.ligarMotor();
+        baraoVermelho.imprimeEstadoMotor();
         baraoVermelho.acelerar();
         baraoVermelho.acelerar();
         baraoVermelho.acelerar();
@@ -47,5 +32,6 @@ class MainAula01 {
         baraoVermelho.desacelerar();
         baraoVermelho.desacelerar();
         baraoVermelho.desacelerar();
+        baraoVermelho.imprimeEstadoMotor();
     }
 }

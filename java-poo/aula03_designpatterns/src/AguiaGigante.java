@@ -1,5 +1,3 @@
-package aula03_designpatterns;
-
 public class AguiaGigante implements Motorizavel{
     private float peso;
     private String nome;
