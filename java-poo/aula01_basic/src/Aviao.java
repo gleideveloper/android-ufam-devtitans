@@ -75,11 +75,6 @@ public class Aviao {
         setMotor(false);
     }
 
-    public void imprimirOk() {
-        System.out.println("Ok");
-
-    }
-
     public boolean isEmVoo() {
         return emVoo;
     }

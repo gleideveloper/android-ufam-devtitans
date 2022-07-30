@@ -1,7 +1,6 @@
 class MainAula01 {
     public static void main(String[] args) {
         Aviao baraoVermelho = new Aviao("Fooker DR1", "Freitherr");
-        baraoVermelho.imprimirOk();
 
         baraoVermelho.setMotor(false);
         baraoVermelho.setAltura(0.0f);
