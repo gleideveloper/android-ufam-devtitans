@@ -3,12 +3,12 @@ package aula02_fundamentals;
 public class Motor {
     private String modelo;
     private float potencia;
-    private boolean ativo = false;
+    private boolean ativo;
 
-    public Motor(String modelo, float potencia, boolean ativo) {
+    public Motor(String modelo, float potencia) {
         this.setModelo(modelo);
         this.setPotencia(potencia);
-        this.setAtivo(ativo);
+        this.setAtivo(false);
     }
 
     public void ligar(){

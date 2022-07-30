@@ -1,8 +1,8 @@
 package aula02_fundamentals;
 
 public class MotorTurbinado extends Motor {
-    public MotorTurbinado(String modelo, float potencia, boolean ativo) {
-        super(modelo, potencia, ativo);
+    public MotorTurbinado(String modelo, float potencia) {
+        super(modelo, potencia);
     }
 
     @Override
@@ -13,6 +13,6 @@ public class MotorTurbinado extends Motor {
 
     @Override
     public float getPotencia() {
-        return super.getPotencia() * 1.2f;
+        return super.getPotencia();
     }
 }

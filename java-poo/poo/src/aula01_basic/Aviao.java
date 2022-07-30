@@ -13,6 +13,7 @@ public class Aviao {
         this.setIdentificador(identificador);
         this.setMotor(false);
         this.setAltura(0.0f);
+        this.emVoo = false;
     }
 
     public void atualizarStatusVoo() {
@@ -26,7 +27,7 @@ public class Aviao {
         } else {
             if (getVelocidade() < 200) {
                 System.out.println("Estou em solo...");
-            }else{
+            }else if (getVelocidade() >= 200) {
                 setEmVoo(true);
                 System.out.println("Estou decolando...");
             }

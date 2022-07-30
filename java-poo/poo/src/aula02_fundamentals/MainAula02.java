@@ -1,12 +1,11 @@
-package aula03_designpatterns;
+package aula02_fundamentals;
 
-
-public class MainAul03 {
+class MainAula02 {
     private static Aviao boeing777X;
 
     public static void main(String[] args) throws Exception {
-        Motor motorDireito = new MotorTurbinado("General Electric GE9X",50.0f,true);
-        Motor motorEsquerdo = new MotorTurbinado("General Electric GE9X",50.0f,true);
+        Motor motorDireito = new MotorTurbinado("General Electric GE9X",50.0f);
+        Motor motorEsquerdo = new MotorTurbinado("General Electric GE9X",50.0f);
 
         boeing777X = new Aviao("Fooker DR1", "Freitherr", motorDireito, motorEsquerdo);
 
@@ -36,6 +35,7 @@ public class MainAul03 {
     }
     public static void aviaoDecolando(int acerelar){
         boeing777X.ligarMotor();
+        boeing777X.imprimeEstadoMotor();
         for (int i = 1; i <= acerelar; i++) {
             //System.out.println("Aceleração Nº" + i);
             boeing777X.acelerar();
@@ -47,5 +47,7 @@ public class MainAul03 {
             boeing777X.desacelerar();
         }
         boeing777X.desligarMotor();
+        boeing777X.imprimeEstadoMotor();
     }
+
 }

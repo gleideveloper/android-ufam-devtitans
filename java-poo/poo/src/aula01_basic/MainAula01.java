@@ -47,8 +47,5 @@ class MainAula01 {
         baraoVermelho.desacelerar();
         baraoVermelho.desacelerar();
         baraoVermelho.desacelerar();
-        baraoVermelho.desacelerar();
-
-
     }
 }

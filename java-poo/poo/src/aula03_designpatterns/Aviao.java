@@ -1,24 +1,27 @@
-package aula02_fundamentals;
+package aula03_designpatterns;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
-public class Aviao {
+public class Aviao extends Observable {
     private String modelo;
     private String identificador;
-    private Motor motorEsquerdo;
-    private Motor motorDireito;
+    private Motorizavel motorEsquerdo;
+    private Motorizavel motorDireito;
     private float altura;
     private float velocidade;
     private boolean emVoo;
     private final List<Passageiro> listaPassageiros;
+    private String statusVelocidade;
 
-    public Aviao(String modelo, String identificador, Motor direito, Motor esquerdo) {
+    public Aviao(String modelo, String identificador, Motorizavel direito, Motorizavel esquerdo) {
         this.setModelo(modelo);
         this.setIdentificador(identificador);
         this.setMotorDireito(direito);
         this.setMotorEsquerdo(esquerdo);
         this.setAltura(0.0f);
+        this.emVoo = false;
         listaPassageiros = new ArrayList<>();
     }
 
@@ -34,10 +37,7 @@ public class Aviao {
     }
 
     public void imprimirListaDePassageiros() {
-        listaPassageiros.forEach(p -> System.out.println(
-                "Nome Completo: " + p.getNome() + " " + p.getSobreNome() +
-                        "\nCPF: " + p.getCpf()
-        ));
+        listaPassageiros.forEach(p -> System.out.println(p.toString()));
     }
 
     public Passageiro buscarPassageiroPorCPF(String cpf) throws Exception {
@@ -61,32 +61,40 @@ public class Aviao {
     }
 
     public void atualizarStatusVoo() {
+        String statusVoo = null;
         if (isEmVoo()) {
             if (getVelocidade() >= 200) {
-                setEmVoo(true);
-                System.out.println("Estou voando...");
+                //setEmVoo(true);
+                statusVoo = "Estou voando...";
             } else {
                 setEmVoo(false);
-                System.out.println("Estou aterrisando...");
+                statusVoo = "Estou aterrisando...";
             }
         } else {
             if (getVelocidade() < 200) {
-                System.out.println("Estou em solo...");
-            } else {
+                statusVoo = "Estou em solo...";
+            } else if (getVelocidade() >= 200){
                 setEmVoo(true);
-                System.out.println("Estou decolando...");
+                statusVoo = "Estou decolando...";
             }
         }
+        String notificacao = getModelo() + " | " +
+                getIdentificador() + " | " +
+                statusVelocidade + " | " +
+                statusVoo;
+        setChanged();
+        notifyObservers(notificacao);
     }
 
     public void acelerar() {
         if (getEstadoMotor()) {
             setVelocidade(getVelocidade() + getPotenciaMotor());
-            System.out.printf("Avião a %2.0f km/h\n", getVelocidade());
+            statusVelocidade = "Avião a " + getVelocidade() + " km/h";
         } else {
             System.out.println("ERRO: Motor desligado");
         }
         atualizarStatusVoo();
+        System.out.println("---------------------------------------------------------------------\n");
     }
 
     public void desacelerar() {
@@ -94,30 +102,31 @@ public class Aviao {
             if (getVelocidade() > 0) {
                 setVelocidade(getVelocidade() - getPotenciaMotor());
             }
-            System.out.printf("Avião a %2.0f km/h\n", getVelocidade());
+            statusVelocidade = "Avião a " + getVelocidade() + " km/h";
         } else {
             System.out.println("ERRO: Motor desligado");
         }
         atualizarStatusVoo();
+        System.out.println("---------------------------------------------------------------------\n");
     }
 
     public float getPotenciaMotor() {
-        long potenciaDireito = motorDireito.isAtivo() ? (long) motorDireito.getPotencia() : 0;
-        long potenciaEsquerdo = motorEsquerdo.isAtivo() ? (long) motorEsquerdo.getPotencia() : 0;
+        long potenciaDireito = motorDireito.getAtivo() ? (long) motorDireito.getPotencia() : 0;
+        long potenciaEsquerdo = motorEsquerdo.getAtivo() ? (long) motorEsquerdo.getPotencia() : 0;
         return potenciaDireito + potenciaEsquerdo;
     }
 
     public boolean getEstadoMotor() {
-        return motorEsquerdo.isAtivo() || motorDireito.isAtivo();
+        return motorEsquerdo.getAtivo() || motorDireito.getAtivo();
     }
 
     public void imprimeEstadoMotor() {
         if (getEstadoMotor()) {
-            if (motorEsquerdo.isAtivo() && motorDireito.isAtivo()) {
+            if (motorEsquerdo.getAtivo() && motorDireito.getAtivo()) {
                 System.out.println("Os motores estão ligados..");
-            } else if (motorDireito.isAtivo()) {
+            } else if (motorDireito.getAtivo()) {
                 System.out.println("Somente o motor Direito está ligado");
-            } else if (motorEsquerdo.isAtivo()) {
+            } else if (motorEsquerdo.getAtivo()) {
                 System.out.println("Somente o motor Esquerdo está ligado");
             }
         } else {
@@ -136,24 +145,19 @@ public class Aviao {
         motorDireito.desligar();
     }
 
-    public void imprimirOk() {
-        System.out.println("Ok");
-
-    }
-
-    public Motor getMotorEsquerdo() {
+    public Motorizavel getMotorEsquerdo() {
         return motorEsquerdo;
     }
 
-    public void setMotorEsquerdo(Motor motorEsquerdo) {
+    public void setMotorEsquerdo(Motorizavel motorEsquerdo) {
         this.motorEsquerdo = motorEsquerdo;
     }
 
-    public Motor getMotorDireito() {
+    public Motorizavel getMotorDireito() {
         return motorDireito;
     }
 
-    public void setMotorDireito(Motor motorDireito) {
+    public void setMotorDireito(Motorizavel motorDireito) {
         this.motorDireito = motorDireito;
     }
 
