@@ -11,6 +11,6 @@ public class MotorTurbinado extends Motor {
 
     @Override
     public float getPotencia() {
-        return super.getPotencia();
+        return super.getPotencia() * 1.2f;
     }
 }

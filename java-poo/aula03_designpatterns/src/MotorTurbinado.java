@@ -1,6 +1,6 @@
 public class MotorTurbinado extends Motor{
-    public MotorTurbinado(String modelo, float potencia, boolean ativo) {
-        super(modelo, potencia, ativo);
+    public MotorTurbinado(String modelo, float potencia) {
+        super(modelo, potencia);
     }
 
     @Override

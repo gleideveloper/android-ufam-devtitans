@@ -10,6 +10,7 @@ public class Aviao {
     private float velocidade;
     private boolean emVoo;
     private final List<Passageiro> listaPassageiros;
+    private String statusVelocidade;
 
     public Aviao(String modelo, String identificador, Motor direito, Motor esquerdo) {
         this.setModelo(modelo);
@@ -60,28 +61,29 @@ public class Aviao {
     }
 
     public void atualizarStatusVoo() {
+        String statusVoo = null;
         if (isEmVoo()) {
-            if (getVelocidade() >= 200) {
-                setEmVoo(true);
-                System.out.println("Estou voando...");
+            if (getVelocidade() >= getPotenciaMotor() * 1.1) {
+                statusVoo = "Estou voando...";
             } else {
                 setEmVoo(false);
-                System.out.println("Estou aterrisando...");
+                statusVoo = "Estou aterrisando...";
             }
         } else {
-            if (getVelocidade() < 200) {
-                System.out.println("Estou em solo...");
+            if (getVelocidade() < getPotenciaMotor() * 1.1) {
+                statusVoo = "Estou em solo...";
             } else{
                 setEmVoo(true);
-                System.out.println("Estou decolando...");
+                statusVoo = "Estou decolando...";
             }
         }
+        System.out.println(statusVelocidade + " >> " + statusVoo);
     }
 
     public void acelerar() {
         if (getEstadoMotor()) {
             setVelocidade(getVelocidade() + getPotenciaMotor());
-            System.out.printf("Avião a %2.0f km/h\n", getVelocidade());
+            statusVelocidade = "Avião a " + getVelocidade() + " km/h";
         } else {
             System.out.println("ERRO: Motor desligado");
         }
@@ -93,7 +95,7 @@ public class Aviao {
             if (getVelocidade() > 0) {
                 setVelocidade(getVelocidade() - getPotenciaMotor());
             }
-            System.out.printf("Avião a %2.0f km/h\n", getVelocidade());
+            statusVelocidade = "Avião a " + getVelocidade() + " km/h";
         } else {
             System.out.println("ERRO: Motor desligado");
         }
@@ -133,11 +135,6 @@ public class Aviao {
     public void desligarMotor() {
         motorEsquerdo.desligar();
         motorDireito.desligar();
-    }
-
-    public void imprimirOk() {
-        System.out.println("Ok");
-
     }
 
     public Motor getMotorEsquerdo() {

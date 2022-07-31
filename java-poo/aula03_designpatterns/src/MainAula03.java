@@ -1,9 +1,12 @@
+/**
+ * @RepositoryGitHub: https://github.com/gleideveloper/android-ufam-devtitans
+ */
 public class MainAula03 {
     private static Aviao boeing737Max;
 
     public static void main(String[] args) throws Exception {
-        Motorizavel gaviao = new AguiaGigante(1000,"Gavião",200);
-        Motorizavel falcao = new AguiaGigante(1000,"Falção",200);
+        Motorizavel gaviao = new AguiaGigante(1000,"Gavião",200.0f);
+        Motorizavel falcao = new AguiaGigante(1000,"Falção",200.0f);
 
         boeing737Max = new Aviao("Fooker DR1", "Freitherr", gaviao, falcao);
 
@@ -18,7 +21,7 @@ public class MainAula03 {
         boeing737Max.imprimirListaDePassageiros();
         System.out.println("\n----------- Aeronave em voo ------------");
         aviaoDecolando(5);
-        aviaoPousando(6);
+        aviaoPousando(5);
         System.out.println("\n----------- Lista de Desembarque -----------");
         boeing737Max.desembarcarPassageiros();
 
@@ -41,14 +44,12 @@ public class MainAula03 {
         boeing737Max.ligarMotor();
         boeing737Max.imprimeEstadoMotor();
         for (int i = 1; i <= acerelar; i++) {
-            //System.out.println("Aceleração Nº" + i);
             boeing737Max.acelerar();
         }
     }
 
     public static void aviaoPousando(int desacelerar){
         for (int j = 1; j <= desacelerar; j++) {
-            //System.out.println("Desaceleração Nº" + j);
             boeing737Max.desacelerar();
         }
         boeing737Max.desligarMotor();

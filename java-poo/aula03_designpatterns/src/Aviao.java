@@ -61,17 +61,16 @@ public class Aviao extends Observable {
     public void atualizarStatusVoo() {
         String statusVoo = null;
         if (isEmVoo()) {
-            if (getVelocidade() >= 200) {
-                //setEmVoo(true);
+            if (getVelocidade() >= getPotenciaMotor() * 1.1) {
                 statusVoo = "Estou voando...";
             } else {
                 setEmVoo(false);
                 statusVoo = "Estou aterrisando...";
             }
         } else {
-            if (getVelocidade() < 200) {
+            if (getVelocidade() < getPotenciaMotor() * 1.1) {
                 statusVoo = "Estou em solo...";
-            } else if (getVelocidade() >= 200){
+            } else{
                 setEmVoo(true);
                 statusVoo = "Estou decolando...";
             }

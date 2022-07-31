@@ -5,6 +5,7 @@ public class Aviao {
     private float altura;
     private float velocidade;
     private boolean emVoo;
+    private String statusVelocidade;
 
     public Aviao(String modelo, String identificador) {
         this.setModelo(modelo);
@@ -15,27 +16,29 @@ public class Aviao {
     }
 
     public void atualizarStatusVoo() {
+        String statusVoo = null;
         if (isEmVoo()) {
             if (getVelocidade() >= 200) {
-                System.out.println("Estou voando...");
+                statusVoo = "Estou voando...";
             } else {
                 setEmVoo(false);
-                System.out.println("Estou aterrisando...");
+                statusVoo = "Estou aterrisando...";
             }
         } else {
             if (getVelocidade() < 200) {
-                System.out.println("Estou em solo...");
-            }else if (getVelocidade() >= 200) {
+                statusVoo = "Estou em solo...";
+            }else {
                 setEmVoo(true);
-                System.out.println("Estou decolando...");
+                statusVoo = "Estou decolando...";
             }
         }
+        System.out.println(statusVelocidade + " >> " + statusVoo);
     }
 
     public void acelerar() {
         if (getEstadoMotor()) {
             setVelocidade(getVelocidade() + 50.0f);
-            System.out.println("Avião a " + getVelocidade() + " km/h");
+            statusVelocidade = "Avião a " + getVelocidade() + " km/h";
         } else {
             System.out.println("ERRO: Motor desligado");
         }
@@ -47,7 +50,7 @@ public class Aviao {
             if (getVelocidade() > 0.0f) {
                 setVelocidade(getVelocidade() - 50.0f);
             }
-            System.out.println("Avião a " + getVelocidade() + " km/h");
+            statusVelocidade = "Avião a " + getVelocidade() + " km/h";
         } else {
             System.out.println("ERRO: Motor desligado");
         }

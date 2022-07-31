@@ -1,24 +1,12 @@
 public class Motor implements Motorizavel{
     private String modelo;
     private float potencia;
-    private boolean ativo = false;
+    private boolean ativo;
 
-    public Motor(String modelo, float potencia, boolean ativo) {
+    public Motor(String modelo, float potencia) {
         this.setModelo(modelo);
         this.setPotencia(potencia);
-        this.setAtivo(ativo);
-    }
-
-    @Override
-    public void ligar(){
-        setAtivo(true);
-        System.out.println("......VRUMMMM!!");
-    }
-
-    @Override
-    public void desligar(){
-        setAtivo(false);
-        System.out.println("mmmmm……..");
+        this.setAtivo(false);
     }
 
     public String getModelo() {
@@ -31,7 +19,7 @@ public class Motor implements Motorizavel{
 
     @Override
     public boolean getAtivo() {
-        return false;
+        return ativo;
     }
 
     @Override
@@ -45,5 +33,17 @@ public class Motor implements Motorizavel{
 
     public void setAtivo(boolean ativo) {
         this.ativo = ativo;
+    }
+
+    @Override
+    public void ligar(){
+        setAtivo(true);
+        System.out.println("......VRUMMMM!!");
+    }
+
+    @Override
+    public void desligar(){
+        setAtivo(false);
+        System.out.println("mmmmm……..");
     }
 }

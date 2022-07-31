@@ -5,10 +5,10 @@ public class AguiaGigante implements Motorizavel{
     private boolean acordada;
 
     public AguiaGigante(float peso, String nome, float forca) {
-        this.peso = peso;
-        this.nome = nome;
-        this.forca = forca;
-        this.acordada = true;
+        this.setPeso(peso);
+        this.setNome(nome);
+        this.setForca(forca);
+        this.setAcordada(false);
     }
 
     public float getPeso() {
