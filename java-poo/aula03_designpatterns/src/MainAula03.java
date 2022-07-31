@@ -8,7 +8,7 @@ public class MainAula03 {
         Motorizavel gaviao = new AguiaGigante(1000,"Gavião",200.0f);
         Motorizavel falcao = new AguiaGigante(1000,"Falção",200.0f);
 
-        boeing737Max = new Aviao("Fooker DR1", "Freitherr", gaviao, falcao);
+        boeing737Max = new Aviao("Boeing 737 MAX", "Boeing", gaviao, falcao);
 
         TorreDeControle mao = new TorreDeControle("Manaus");
         TorreDeControle sao = new TorreDeControle("São Paulo");
