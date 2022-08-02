@@ -1,16 +1,13 @@
 package gleides.vinente.myapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = MainActivity.class.getName();
@@ -29,6 +26,18 @@ public class MainActivity extends AppCompatActivity {
         valorEntrada = findViewById(R.id.enterNumber);
         valor = Integer.parseInt(getString(R.string.valor));
         setAcumulador(valor);
+
+        valorEntrada.setOnKeyListener((view, keyCode, keyEvent) -> {
+            if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                MainActivity.this.incrementaValor(view);
+                return true;
+            }
+            return false;
+        });
+
+        valorEntrada.setOnFocusChangeListener((v, hasFocus)-> {
+            v.setBackgroundResource(R.color.my_color);
+        });
     }
 
     public void incrementaValor(View view) {
