@@ -30,8 +30,6 @@ public class MainActivity extends AppCompatActivity {
         valor = Integer.parseInt(getString(R.string.valor));
     }
 
-
-
     public void incrementaValor(View view) {
         if(!valorEntrada.getText().toString().isEmpty()) {
             displayValor.setBackgroundResource(R.color.my_color);
