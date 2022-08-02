@@ -28,12 +28,13 @@ public class MainActivity extends AppCompatActivity {
         displayValor = findViewById(R.id.displayValorAcumulado);
         valorEntrada = findViewById(R.id.enterNumber);
         valor = Integer.parseInt(getString(R.string.valor));
+        setAcumulador(valor);
     }
 
     public void incrementaValor(View view) {
         if(!valorEntrada.getText().toString().isEmpty()) {
             displayValor.setBackgroundResource(R.color.my_color);
-            acumulador = Integer.parseInt(valorEntrada.getText().toString()) + valor;
+            acumulador += Integer.parseInt(valorEntrada.getText().toString()) ;
             displayValor.setText("" + acumulador);
             valorEntrada.setText("");
         }
