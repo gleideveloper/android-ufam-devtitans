@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ContaCliqueGleides</string>
+    <string name="button_increment">Incrementa</string>
+    <string name="minha_conta">Minha Conta</string>
+    <string name="valor_acumulado">Valor Acumulado</string>
+    <string name="entre_com_um_valor">Entre com um valor</string>
+    <string name="valor">1000</string>
+</resources>
