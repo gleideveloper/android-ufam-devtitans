@@ -5,10 +5,12 @@ public class UsuarioLembrete {
     private String nomeCompleto;
     private String lembrete;
 
+    public UsuarioLembrete() {}
+
     public UsuarioLembrete(int id, String nomeCompleto, String lembrete) {
-        this.id = id;
-        this.nomeCompleto = nomeCompleto;
-        this.lembrete = lembrete;
+        this.setId(id);
+        this.setNomeCompleto(nomeCompleto);
+        this.setLembrete(lembrete);
     }
 
     public int getId() {

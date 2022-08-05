@@ -61,8 +61,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void enviarDados(View v){
+        Bundle dadosConta = new Bundle();
+        dadosConta.putString("nome", valorNome.getText().toString());
+        dadosConta.putString("acumulado", displayValor.getText().toString());
+
         Intent intent = new Intent(this,SecondActivity.class);
-        intent.putExtra("vinente", valorNome.getText().toString());
+        intent.putExtras(dadosConta);
         startActivity(intent);
     }
 

@@ -1,25 +1,30 @@
 package gleides.vinente.myapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.os.Bundle;
-import android.view.KeyEvent;
-import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 public class SecondActivity extends AppCompatActivity {
+    private TextView nomeUsuario;
+    private Button bntSalvar;
+    private EditText lembrete;
+    private CheckBox dropCheck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-        TextView textRecebido = findViewById(R.id.txvMensagem);
-        Button btnBack = findViewById(R.id.btnSalvar);
-        textRecebido.setText("Olá " + getIntent().getStringExtra("vinente"));
+        nomeUsuario = findViewById(R.id.edtNomeUsuario);
+        bntSalvar = findViewById(R.id.btnSalvar);
+        lembrete = findViewById(R.id.edtLembrete);
+        dropCheck = findViewById(R.id.checkBox);
+        Bundle dadosRecedido =  getIntent().getExtras();
+        lembrete.setText("Olá " + dadosRecedido.getString("nome") +
+                "\nSeu saldo em conta: " + dadosRecedido.getString("acumulado"));
     }
 
-    public void voltar(View v){
-        finish();
-    }
 }
