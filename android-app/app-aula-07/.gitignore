@@ -15,3 +15,6 @@ local.properties
 /build
 /src/androidTest/
 /src/test/
+/app/build/
+/app/src/androidTest/
+/app/src/test/
