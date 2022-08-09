@@ -33,14 +33,6 @@ public class MainActivity extends AppCompatActivity {
         valor = Integer.parseInt(getString(R.string.valor));
         setAcumulador(valor);
 
-        botaoProxTela.setOnKeyListener((view, keyCode, keyEvent)->{
-            if (keyCode == KeyEvent.KEYCODE_ENTER) {
-                this.enviarDados(view);
-                return true;
-            }
-            return false;
-        });
-
         valorEntrada.setOnKeyListener((view, keyCode, keyEvent) -> {
             if (keyCode == KeyEvent.KEYCODE_ENTER) {
                 this.incrementaValor(view);
@@ -61,13 +53,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void enviarDados(View v){
-        Bundle dadosConta = new Bundle();
-        dadosConta.putString("nome", valorNome.getText().toString());
-        dadosConta.putString("acumulado", displayValor.getText().toString());
-
-        Intent intent = new Intent(this,SecondActivity.class);
-        intent.putExtras(dadosConta);
-        startActivity(intent);
+        if(valorNome.getText().toString().isEmpty()){
+            Toast.makeText(getBaseContext(), "Informe um nome!",
+                    Toast.LENGTH_SHORT).show();
+        }else {
+            Bundle dadosConta = new Bundle();
+            dadosConta.putString("nome", valorNome.getText().toString());
+            dadosConta.putString("acumulado", displayValor.getText().toString());
+            Intent intent = new Intent(this, SecondActivity.class);
+            intent.putExtras(dadosConta);
+            startActivity(intent);
+        }
     }
 
     public void incrementaValor(View v) {

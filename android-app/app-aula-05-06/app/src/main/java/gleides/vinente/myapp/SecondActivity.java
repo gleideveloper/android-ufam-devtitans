@@ -18,10 +18,10 @@ public class SecondActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
-        nomeUsuario = findViewById(R.id.edtNomeUsuario);
+        nomeUsuario = findViewById(R.id.edtLembrete);
         bntSalvar = findViewById(R.id.btnSalvar);
-        lembrete = findViewById(R.id.edtLembrete);
-        dropCheck = findViewById(R.id.checkBox);
+        lembrete = findViewById(R.id.edtLembreteList);
+        dropCheck = findViewById(R.id.chbDropCheck);
         Bundle dadosRecedido =  getIntent().getExtras();
         lembrete.setText("Olá " + dadosRecedido.getString("nome") +
                 "\nSeu saldo em conta: " + dadosRecedido.getString("acumulado"));
