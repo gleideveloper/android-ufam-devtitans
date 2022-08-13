@@ -52,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        displayValor.setText("");
+    }
+
     public void enviarDados(View v){
         if(valorNome.getText().toString().isEmpty()){
             Toast.makeText(getBaseContext(), "Informe um nome!",
