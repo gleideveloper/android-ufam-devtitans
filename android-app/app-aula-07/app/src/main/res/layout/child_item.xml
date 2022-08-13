@@ -23,7 +23,7 @@
                 android:layout_marginStart="5dp"
                 android:background="@color/cardview_dark_background"
                 android:contentDescription="@string/todo"
-                android:src="@drawable/titan"/>
+                android:src="@drawable/titan" />
             />
 
             <LinearLayout
@@ -37,6 +37,12 @@
 
                 <TextView
                     android:id="@+id/child_item_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/child_item_rate"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textStyle="bold" />

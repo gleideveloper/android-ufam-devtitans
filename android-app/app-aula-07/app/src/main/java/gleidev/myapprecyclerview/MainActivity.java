@@ -31,17 +31,19 @@ public class MainActivity extends AppCompatActivity {
 
     private List<ParentItem> parentItemList() {
         List<ParentItem> parentItemList = new ArrayList<>();
-        parentItemList.add(new ParentItem("Titulo Faixa 1", childItemList()));
-        parentItemList.add(new ParentItem("Titulo Faixa 1", childItemList()));
-        parentItemList.add(new ParentItem("Titulo Faixa 1", childItemList()));
+        for (int i = 1; i <= 5; i++) {
+            parentItemList.add(new ParentItem("Titulo Faixa " + i, childItemList()));
+
+        }
         return parentItemList;
     }
 
     private List<ChildItem> childItemList() {
         List<ChildItem> childItemList = new ArrayList<>();
-        childItemList.add(new ChildItem("Item da faixa 1"));
-        childItemList.add(new ChildItem("Item da faixa 1"));
-        childItemList.add(new ChildItem("Item da faixa 1"));
+        for (int i = 1; i <= 10; i++) {
+            childItemList.add(new ChildItem("Item da faixa" + i, 10));
+        }
+
         return childItemList;
     }
 }

@@ -31,6 +31,7 @@ public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.Chil
     public void onBindViewHolder(@NonNull ChildViewHolder holder, int position) {
         ChildItem childItem = childItemList.get(position);
         holder.childItemTitle.setText(childItem.getChildItemTitle());
+        holder.childItemTitle.setText("IMDb: " + childItem.getChildItemRate());
     }
 
     @Override
@@ -40,9 +41,11 @@ public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.Chil
 
     class ChildViewHolder extends RecyclerView.ViewHolder {
         TextView childItemTitle;
+        TextView childItemRate;
         public ChildViewHolder(@NonNull View itemView) {
             super(itemView);
             childItemTitle = itemView.findViewById(R.id.child_item_title);
+            childItemRate = itemView.findViewById(R.id.child_item_rate);
         }
     }
 }
