@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">WebServiceVolley</string>
+    <string name="parse">Conectar e Interpretar</string>
+    <string name="parsed_text">Aguardando dados...!</string>
+</resources>
