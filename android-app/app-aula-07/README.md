@@ -20,6 +20,14 @@ Defina o Adapter que associa seus dados às visualizações ViewHolder.
 
 ### Implementação RecyclerView
 
+#### Model
+* ParentItem
+  - private String parentItemTitle;
+  - private List<ChildItem> childItemList;
+* ChildItem
+  - private String childItemTitle;
+  - private int childItemRate;
+ 
 ```java
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -148,4 +156,4 @@ public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.Chil
   <img src="/android-app/app-aula-07/assets/MyAppRecyclerView/Screenshot_recycleView" alt="RecyclerViews" alt="drawing" width="300"/>
 </p>
 
-###Aula07.2 - WebServicesTarefa:
+### Aula07.2 - WebServicesTarefa:Como criar WebServices e consumir uma api
