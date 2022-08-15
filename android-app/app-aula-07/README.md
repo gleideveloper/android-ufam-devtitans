@@ -4,8 +4,13 @@
 + <b>/app-aula-07
   * |-> aula07: RecyclerViews e WebServicesTarefa
 ###Aula07.1 - RecyclerViews:
-Exemplo no diagram de corte forte acoplamento entre a clase VendaService com a classe PagSeguroService, não sendo uma boa prática, sem o uso de interface.
-![Alt text](src/main/resources/modelagem/AcomplamentoForte.png?raw=true "Forte Acomplamento")
+<p>Exemplo no diagram de corte forte acoplamento entre a clase VendaService com a classe PagSeguroService, não sendo uma boa prática, sem o uso de interface.
+<p align="center">
+  <img src="/android-app/app-aula-07/assets/MyAppRecyclerView/Screenshot_recycleView.png" alt="RecyclerViews" alt="drawing" width="300"/>
+</p>
+<p align="center">
+  <img src="/android-app/app-aula-07/assets/MyAppRecyclerView/recycler_view" alt="RecyclerViews" alt="drawing" width="300"/>
+</p>
 ###Aula07.2 - WebServicesTarefa:
 ```java
 public class VendaService {
