@@ -1,5 +1,5 @@
 # Mobile Android
-## ./android-app/app-aula-07: RecyclerViews e WebServicesTarefa 
+## ./android-app/app-aula-07: RecyclerViews e WebServices usando lib Volley
 ### Aula07.1 - RecyclerViews: <a href="https://developer.android.com/guide/topics/ui/layout/recyclerview?hl=pt-br" title="developer.android.com">Como criar listas dinâmicas com o RecyclerView  </a>
  
 O RecyclerView facilita e torna eficiente a exibição de grandes conjuntos de dados. Você fornece os dados e define a aparência de cada item, e a biblioteca RecyclerView, quando necessário, cria os elementos dinamicamente. Como o nome indica, recicla esses elementos individuais. Quando um item rola para fora da tela, o RecyclerView não destrói a visualização dele. Em vez disso, o RecyclerView reutiliza a visualização para novos itens que passaram a aparecer na tela. Isso melhora muito o desempenho, aperfeiçoando a capacidade de resposta do app e reduzindo o consumo de energia.
@@ -152,7 +152,7 @@ public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.Chil
 }
 ````
 
-### Aula07.2 - WebServices Volley:  <a href="https://google.github.io/volley/request-custom.html" title="google.github.io"> Como Implementar uma solicitação personalizada </a>
+### Aula07.2 - WebServices usando lib Volley:  <a href="https://google.github.io/volley/request-custom.html" title="google.github.io"> Como Implementar uma solicitação personalizada </a>
 <p align="center">
-  <img src="/android-app/app-aula-07/assets/MyAppRecyclerView/Screenshot_recycleView" alt="RecyclerViews" alt="drawing" width="300"/>
+  <img src="/android-app/app-aula-07/assets/WebServiceVolley/webservice_volley.gif" alt="Webservice Volley." alt="drawing" width="300"/>
 </p>
