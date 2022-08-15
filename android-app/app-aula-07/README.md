@@ -183,7 +183,6 @@ public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.Chil
 
     private void jsonParseString() {
         String url = "https://randomuser.me/api";
-
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
@@ -230,7 +229,6 @@ public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.Chil
                                         jDtNascimento.getString("date").split("T")[0] +
                                         "\nIdade: " + jDtNascimento.getString("age")
                         );
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
