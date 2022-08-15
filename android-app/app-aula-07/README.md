@@ -17,7 +17,8 @@ Defina o Adapter que associa seus dados às visualizações ViewHolder.
 <p align="center">
   <img src="/android-app/app-aula-07/assets/MyAppRecyclerView/recycler_view.gif" alt="RecyclerViews" alt="drawing" width="300"/>
 </p>
-### Implementação Recycler View
+
+### Implementação RecyclerView
 
 ```java
 public class MainActivity extends AppCompatActivity {
