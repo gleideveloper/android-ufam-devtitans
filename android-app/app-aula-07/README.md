@@ -6,3 +6,4 @@
   * |-> aula06: Intents e SQLiteTarefa
 + <b>/app-aula-07
   * |-> aula07: RecyclerViews e WebServicesTarefa
+
