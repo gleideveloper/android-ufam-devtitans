@@ -17,7 +17,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
-
     Button button;
     ImageView imvFoto;
     TextView txvNomeCompleto;
@@ -29,31 +28,33 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //Criando as instancias dos objetos do layout da tela principal
         button = findViewById(R.id.button);
         imvFoto = findViewById(R.id.imageView);
         txvNomeCompleto = findViewById(R.id.txvNome);
         txvEmail = findViewById(R.id.txvEmail);
         txvEndereco = findViewById(R.id.txvEndereco);
         txvDtNascimento = findViewById(R.id.txvDataNascimento);
-
+        //Evento para ouvir o click do botão
         button.setOnClickListener(view -> jsonParseString());
-
     }
 
     private void jsonParseString() {
         String url = "https://randomuser.me/api";
-
         JsonObjectRequest request = new JsonObjectRequest(
                 Request.Method.GET,
                 url,
                 null,
                 response -> {
+                    //Objeto principal do Json
                     JSONArray jArray;
+                    //SubObjetos do Json
                     JSONObject jObject, jNome, jLocalizacao, jRua, jDtNascimento, jUrl;
-
+                    //trantamento de exceção
                     try {
+                        //Pegando a Lista Results
                         jArray = response.getJSONArray("results");
+                        //Pegando o primeiro item da lista
                         jObject = jArray.getJSONObject(0);
                         //Foto usuário
                         jUrl = (jObject.getJSONObject("picture"));
@@ -86,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
                                         jDtNascimento.getString("date").split("T")[0] +
                                         "\nIdade: " + jDtNascimento.getString("age")
                         );
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(this, "That didn't work!", Toast.LENGTH_SHORT).show();
                 }
         );
+        //Padrão de Projeto Singleton para ter uma única requisição.
         MySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(request);
     }
-
 }
