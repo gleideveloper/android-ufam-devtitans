@@ -17,7 +17,8 @@ Defina o Adapter que associa seus dados às visualizações ViewHolder.
 <p align="center">
   <img src="/android-app/app-aula-07/assets/MyAppRecyclerView/recycler_view.gif" alt="RecyclerViews" alt="drawing" width="300"/>
 </p>
-### Implementação
+### Implementação Recycler View
+
 ```java
 public class MainActivity extends AppCompatActivity {
     @Override
@@ -48,6 +49,96 @@ public class MainActivity extends AppCompatActivity {
             childItemList.add(new ChildItem("Item da faixa" + i, 10));
         }
         return childItemList;
+    }
+}
+````
+### Implementação ParentItemAdapter
+
+```java
+public class ParentItemAdapter extends RecyclerView.Adapter<ParentItemAdapter.ParentViewHolder> {
+    private RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
+    private List<ParentItem> itemList;
+
+    public ParentItemAdapter(List<ParentItem> itemList) {
+        this.itemList = itemList;
+    }
+
+    @NonNull
+    @Override
+    public ParentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.parent_item, parent, false);
+        return new ParentViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ParentViewHolder holder, int position) {
+        ParentItem parentItem = itemList.get(position);
+        holder.parentItemTitle.setText(parentItem.getParentItemTitle());
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(holder.childRecycleView.getContext(), LinearLayoutManager.HORIZONTAL, false);
+        layoutManager.setInitialPrefetchItemCount(parentItem.getChildItemList().size());
+
+        ChildItemAdapter childItemAdapter = new ChildItemAdapter(parentItem.getChildItemList());
+        holder.childRecycleView.setLayoutManager(layoutManager);
+        holder.childRecycleView.setAdapter(childItemAdapter);
+        holder.childRecycleView.setRecycledViewPool(viewPool);
+    }
+
+    @Override
+    public int getItemCount() {
+        return itemList.size();
+    }
+
+    class ParentViewHolder extends RecyclerView.ViewHolder {
+        private final TextView parentItemTitle;
+        private final RecyclerView childRecycleView;
+
+        public ParentViewHolder(@NonNull View itemView) {
+            super(itemView);
+            parentItemTitle = itemView.findViewById(R.id.parent_item_title);
+            childRecycleView = itemView.findViewById(R.id.child_recyclerview);
+        }
+    }
+}
+````
+
+### Implementação ChildItemAdapter
+
+```java
+public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.ChildViewHolder> {
+    private List<ChildItem> childItemList;
+
+    public ChildItemAdapter(List<ChildItem> childItemList) {
+        this.childItemList = childItemList;
+    }
+
+    @NonNull
+    @Override
+    public ChildViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.child_item,parent, false);
+        return new ChildViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ChildViewHolder holder, int position) {
+        ChildItem childItem = childItemList.get(position);
+        holder.childItemTitle.setText(childItem.getChildItemTitle());
+        holder.childItemTitle.setText("IMDb: " + childItem.getChildItemRate());
+    }
+
+    @Override
+    public int getItemCount() {
+        return childItemList.size();
+    }
+
+    class ChildViewHolder extends RecyclerView.ViewHolder {
+        TextView childItemTitle;
+        TextView childItemRate;
+        public ChildViewHolder(@NonNull View itemView) {
+            super(itemView);
+            childItemTitle = itemView.findViewById(R.id.child_item_title);
+            childItemRate = itemView.findViewById(R.id.child_item_rate);
+        }
     }
 }
 ````
