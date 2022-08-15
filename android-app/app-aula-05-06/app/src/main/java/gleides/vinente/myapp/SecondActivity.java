@@ -43,9 +43,9 @@ public class SecondActivity extends AppCompatActivity {
         txvDadosUsuario.setText("Olá " + dadosRecedido.getString("nome") +
                 "\nSeu saldo em conta: " + dadosRecedido.getString("acumulado") +
                 "\nSua Lista de Lembretes");
-
         bntSalvar.setOnClickListener(view -> {
             salvarLembrete();
+            edtLembrete.requestFocus();
         });
 
         atualizaCaixaTexto();
@@ -61,6 +61,7 @@ public class SecondActivity extends AppCompatActivity {
             lembrete.setNomeCompleto(this.getNomeChave());
             lembrete.setLembrete(this.getEdtLembrete().getText().toString() + "\n");
             db.addLembrete(lembrete);
+            this.getEdtLembrete().setText("");
             this.atualizaCaixaTexto();
         }else{
             Toast.makeText(getBaseContext(), "Informe o lembrete!!!",

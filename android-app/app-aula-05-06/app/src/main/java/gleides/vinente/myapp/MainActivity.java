@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Instacia todos os componentes da tela principal
         setContentView(R.layout.activity_main);
         botaoIncrementa = findViewById(R.id.botaoIncrementa);
         botaoProxTela = findViewById(R.id.btnSalvar);
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         valorNome = findViewById(R.id.enterName);
         valor = Integer.parseInt(getString(R.string.valor));
         setAcumulador(valor);
-
+        //Evento que ouvi o click no botão Enter
         valorEntrada.setOnKeyListener((view, keyCode, keyEvent) -> {
             if (keyCode == KeyEvent.KEYCODE_ENTER) {
                 this.incrementaValor(view);
@@ -40,24 +41,25 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         });
-
+        //Evento que ouvi o Focus no EditText do valor a ser acumulado
         valorEntrada.setOnFocusChangeListener((v, hasFocus)-> {
             if(hasFocus){
                 v.setBackgroundResource(R.color.my_color);
-                Toast.makeText(getBaseContext(), "EditText Selecionado!",
+                Toast.makeText(getBaseContext(), "Foi alterado a cor da caixa de texto!",
                         Toast.LENGTH_SHORT).show();
             }else{
                 v.setBackgroundResource(R.color.purple_200);
             }
         });
     }
-
+    //Recebo o focus na caixa de texto valor
     @Override
     protected void onResume() {
         super.onResume();
-        displayValor.setText("");
+        valorEntrada.requestFocus();
     }
 
+    //Enviar os dados do usuário para outra tela através Map usando um Bundle
     public void enviarDados(View v){
         if(valorNome.getText().toString().isEmpty()){
             Toast.makeText(getBaseContext(), "Informe um nome!",
@@ -66,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
             Bundle dadosConta = new Bundle();
             dadosConta.putString("nome", valorNome.getText().toString());
             dadosConta.putString("acumulado", displayValor.getText().toString());
+            valorNome.setText("");
             Intent intent = new Intent(this, SecondActivity.class);
             intent.putExtras(dadosConta);
             startActivity(intent);
