@@ -6,17 +6,7 @@
   
 ### Aula07.1 - RecyclerViews: <a href="https://developer.android.com/guide/topics/ui/layout/recyclerview?hl=pt-br" title="developer.android.com">Como criar listas dinâmicas com o RecyclerView  </a>
  
-O RecyclerView facilita e torna eficiente a exibição de grandes conjuntos de dados. Você fornece os dados e define a aparência de cada item, e a biblioteca RecyclerView, quando necessário, cria os elementos dinamicamente.
-
-O RecyclerView, como o nome indica, recicla esses elementos individuais. Quando um item rola para fora da tela, o RecyclerView não destrói a visualização dele. Em vez disso, o RecyclerView reutiliza a visualização para novos itens que passaram a aparecer na tela. Isso melhora muito o desempenho, aperfeiçoando a capacidade de resposta do app e reduzindo o consumo de energia.
-
-### Classes principais
-Diversas classes diferentes funcionam juntas para criar sua lista dinâmica.
-* RecyclerView é o ViewGroup que contém as visualizações correspondentes aos seus dados. Ela é uma visualização em si, então adicione a RecyclerView ao layout da mesma forma que você adicionaria qualquer outro elemento da IU.
-* Cada elemento individual da lista é definido por um objeto fixador de visualização. Quando o fixador de visualização é criado, ele não tem dados associados a si mesmo. Depois que o fixador de visualização é criado, o RecyclerView o vincula aos dados. Para definir o fixador de visualização, estenda RecyclerView.ViewHolder.
-* RecyclerView é o ViewGroup que contém as visualizações correspondentes aos seus dados. Ela é uma visualização em si, então adicione a RecyclerView ao layout da mesma forma que você adicionaria qualquer outro elemento da IU.
-
-* O gerenciador de layout organiza os elementos individuais na sua lista. Você pode usar um dos gerenciadores de layout fornecidos pela biblioteca RecyclerView ou pode definir seu próprio gerenciador. Todos os gerenciadores de layout são baseados na classe abstrata LayoutManager da biblioteca.
+O RecyclerView facilita e torna eficiente a exibição de grandes conjuntos de dados. Você fornece os dados e define a aparência de cada item, e a biblioteca RecyclerView, quando necessário, cria os elementos dinamicamente. Como o nome indica, recicla esses elementos individuais. Quando um item rola para fora da tela, o RecyclerView não destrói a visualização dele. Em vez disso, o RecyclerView reutiliza a visualização para novos itens que passaram a aparecer na tela. Isso melhora muito o desempenho, aperfeiçoando a capacidade de resposta do app e reduzindo o consumo de energia.
 
 ### Etapas para implementar o RecyclerView
 Se você quiser usar o RecyclerView, é necessário realizar algumas ações. Elas serão discutidas em detalhes nas seções a seguir.
@@ -34,15 +24,35 @@ Defina o Adapter que associa seus dados às visualizações ViewHolder.
 
 ###Aula07.2 - WebServicesTarefa:
 ```java
-public class VendaService {
-
-    public void registrar(Venda venda, String numeroCartao){
-        BigDecimal valorTotal = venda.getPricoUnitario().multiply(new BigDecimal(venda.getQuantidade()));
-        System.out.print("[Venda] Registrando venda de %s no valor total de %f...\n");
-
-        //Forte acomplamento entre a clase VendaService com a classe PagSeguroService
-        PagSeguroService pagSeguroService = new PagSeguroService("857db3dbbce149ab8943430f4d18bdf3");
-        pagSeguroService.efetuarPagamento(numeroCartao, valorTotal);
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        RecyclerView parentRecyclerView = findViewById(R.id.parent_recyclerview);
+        //Instacia o gerenciador e o adapter principal da list pai.
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        ParentItemAdapter parentItemAdapter = new ParentItemAdapter(parentItemList());
+        //Adiciona o adpater na RecyclerView
+        parentRecyclerView.setAdapter(parentItemAdapter);
+        //Adiciona a RecyclerView no layout gerenciador
+        parentRecyclerView.setLayoutManager(layoutManager);
+    }
+    //Adicionar os itens pais na lista
+    private List<ParentItem> parentItemList() {
+        List<ParentItem> parentItemList = new ArrayList<>();
+        for (int i = 1; i <= 5; i++) {
+            parentItemList.add(new ParentItem("Titulo Faixa " + i, childItemList()));
+        }
+        return parentItemList;
+    }
+    //Adicionar os itens filhos na lista
+    private List<ChildItem> childItemList() {
+        List<ChildItem> childItemList = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            childItemList.add(new ChildItem("Item da faixa" + i, 10));
+        }
+        return childItemList;
     }
 }
 ````
