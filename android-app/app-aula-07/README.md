@@ -152,8 +152,7 @@ public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.Chil
 }
 ````
 
+### Aula07.2 - WebServices Volley:  <a href="https://google.github.io/volley/request-custom.html" title="google.github.io"> Como Implementar uma solicitação personalizada </a>
 <p align="center">
   <img src="/android-app/app-aula-07/assets/MyAppRecyclerView/Screenshot_recycleView" alt="RecyclerViews" alt="drawing" width="300"/>
 </p>
-
-### Aula07.2 - WebServicesTarefa:Como criar WebServices e consumir uma api
