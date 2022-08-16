@@ -8,13 +8,15 @@
 #### Layout: <a href="https://developer.android.com/guide/topics/ui/declaring-layout?hl=pt-br" title="developer.android.com">Layout Visão Geral</a>
 O layout define a estrutura de uma interface do usuário no aplicativo, como acontece na atividade. Todos os elementos do layout são criados usando a hierarquia de objetos View e ViewGroup. A View geralmente desenha algo que o usuário pode ver e com que pode interagir. Já um ViewGroup é um contêiner invisível que define a estrutura do layout para View e outros objetos ViewGroup
 Os objetos View geralmente são chamados de "widgets" e podem ser uma das muitas subclasses, como Button ou TextView. Os objetos ViewGroup geralmente são chamados de layouts e podem ser de um dos muitos tipos que fornecem uma estrutura de layout diferente, como LinearLayout ou ConstraintLayout .
-
+<p align="center">
+  <img src="/android-app/app-aula-05-06/assets/viewgroup_2x.png" alt="Layout" alt="drawing" width="600"/>
+</p>
 Um layout pode ser declarado de duas maneiras:
 
-Declarar elementos da IU em XML. O Android fornece um vocabulário XML direto que corresponde às classes e subclasses de visualização, como as de widgets e layouts.
+* Declarar elementos da IU em XML. O Android fornece um vocabulário XML direto que corresponde às classes e subclasses de visualização, como as de widgets e layouts.
 Também é possível usar o Layout Editor do Android Studio para criar o layout XML usando uma interface de arrastar e soltar.
 
-Instanciar elementos do layout no momento da execução. O aplicativo pode criar objetos View e ViewGroup (e processar suas propriedades) programaticamente.
+* Instanciar elementos do layout no momento da execução. O aplicativo pode criar objetos View e ViewGroup (e processar suas propriedades) programaticamente.
 Ao declarar a IU no XML, é possível separar a apresentação do seu aplicativo do código que controla o comportamento dele. O uso de arquivos XML também facilita conseguir layouts diferentes para diferentes orientações e tamanhos de tela. Isso é discutido em Compatibilidade com diferentes tamanhos de tela.
 
 A biblioteca do Android oferece flexibilidade para usar um ou ambos os métodos para criar a IU do seu aplicativo. Por exemplo, é possível declarar os layouts padrão do aplicativo em XML e, em seguida, modificar o layout no momento da execução.
@@ -24,7 +26,7 @@ A biblioteca do Android oferece flexibilidade para usar um ou ambos os métodos 
 Quando um app cria um objeto Intent para usar em startActivity(android.content.Intent) ao iniciar uma nova atividade, o app pode transmitir parâmetros usando o método putExtra(java.lang.String, java.lang.String).
 
 O snippet de código a seguir mostra um exemplo de como realizar essa operação.
- ```java
+```java
     Bundle dadosConta = new Bundle();
     dadosConta.putString("nome", valorNome.getText().toString());
     dadosConta.putString("acumulado", displayValor.getText().toString());
@@ -32,7 +34,7 @@ O snippet de código a seguir mostra um exemplo de como realizar essa operação
     intent.putExtra(dadosConta);
     // ...
     startActivity(intent);
- ````
+````
 O SO organiza o Bundle subjacente do intent. Em seguida, o SO cria a nova atividade, separa os dados e transmite o intent para a nova atividade.
 
 Recomendamos que você use a classe Bundle para definir primitivos conhecidos no SO em objetos Intent. A classe Bundle é altamente otimizada para empacotar e desempacotar usando lotes.
@@ -42,14 +44,39 @@ Em alguns casos, você pode precisar de um mecanismo para envio de objetos compo
 Ao enviar dados por meio de um intent, tenha o cuidado de limitar o tamanho dos dados a alguns KB. Enviar muitos dados pode fazer com que o sistema gere uma exceção TransactionTooLargeException.
 
 ### Aula-06: Android Studio: Intents e SQLite
+<a href="https://developer.android.com/guide/components/activities/parcelables-and-bundles?hl=pt-br" title="developer.android.com">Salvar dados usando o SQLite</a>
 
+Salvar dados em um banco de dados é ideal para dados estruturados ou que se repetem, por exemplo, os dados de contato. Esta página supõe que você esteja familiarizado com os bancos de dados SQL em geral e ajuda a começar a trabalhar com bancos de dados SQLite no Android. As APIs necessárias para usar um banco de dados no Android estão disponíveis no pacote android.database.sqlite.
+
+#### Definir um esquema e um contrato
+Um dos princípios mais importantes dos bancos de dados SQL é o esquema: uma declaração formal de como o banco de dados é organizado. O esquema é refletido nas declarações SQL usadas na criação do banco de dados. É aconselhável criar uma classe de acompanhamento, conhecida como classe de contrato, que especifica explicitamente o layout do esquema de forma sistemática e autodocumentada.
+
+Uma classe de contrato é o contêiner das constantes que definem nomes para URIs, tabelas e colunas. A classe de contrato permite usar as mesmas constantes em outras classes no mesmo pacote. Isso permite que você altere o nome de uma coluna em um local e que a mudança se propague por todo o código.
+
+Uma boa forma de organizar uma classe de contrato é colocar definições que sejam globais para todo o banco de dados no nível raiz da classe. Em seguida, crie uma classe interna para cada tabela. Cada classe interna enumera as colunas da tabela correspondente.
+```java
+public final class FeedReaderContract {
+    // To prevent someone from accidentally instantiating the contract class,
+    // make the constructor private.
+    private FeedReaderContract() {}
+
+    /* Inner class that defines the table contents */
+    public static class FeedEntry implements BaseColumns {
+        public static final String TABLE_NAME = "entry";
+        public static final String COLUMN_NAME_TITLE = "title";
+        public static final String COLUMN_NAME_SUBTITLE = "subtitle";
+    }
+}
+````
+
+## Implementação referente ao aplicativo
 #### Model
 * UsuarioLembrete
   - private int id;
   - private String nomeCompleto;
   - private String lembrete;
-  
-  ### Implementação Tela Principal
+
+### Implementação Tela Principal
 
 ```java
 public class MainActivity extends AppCompatActivity {
