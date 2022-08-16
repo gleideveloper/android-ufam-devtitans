@@ -1,10 +1,6 @@
 # Mobile Android
 ## ./android-app/: Aplicativo referente as aulas 05 e 06
-<p align="center">
-  <img src="/android-app/app-aula-05-06/assets/aula-05-06.gif" alt="Aplicativo referente as aulas 05 e 06" alt="drawing" width="300"/>
-</p>
-
-### Aula-05: Android Studio: Layout, Resources and Activities
+### Aula-05: Layout, Resources and Activities
 #### Layout: <a href="https://developer.android.com/guide/topics/ui/declaring-layout?hl=pt-br" title="developer.android.com">Layout Visão Geral</a>
 O layout define a estrutura de uma interface do usuário no aplicativo, como acontece na atividade. Todos os elementos do layout são criados usando a hierarquia de objetos View e ViewGroup. A View geralmente desenha algo que o usuário pode ver e com que pode interagir. Já um ViewGroup é um contêiner invisível que define a estrutura do layout para View e outros objetos ViewGroup
 Os objetos View geralmente são chamados de "widgets" e podem ser uma das muitas subclasses, como Button ou TextView. Os objetos ViewGroup geralmente são chamados de layouts e podem ser de um dos muitos tipos que fornecem uma estrutura de layout diferente, como LinearLayout ou ConstraintLayout .
@@ -43,8 +39,7 @@ Em alguns casos, você pode precisar de um mecanismo para envio de objetos compo
 
 Ao enviar dados por meio de um intent, tenha o cuidado de limitar o tamanho dos dados a alguns KB. Enviar muitos dados pode fazer com que o sistema gere uma exceção TransactionTooLargeException.
 
-### Aula-06: Android Studio: Intents e SQLite
-<a href="https://developer.android.com/guide/components/activities/parcelables-and-bundles?hl=pt-br" title="developer.android.com">Salvar dados usando o SQLite</a>
+### Aula-06: <a href="https://developer.android.com/guide/components/activities/parcelables-and-bundles?hl=pt-br" title="developer.android.com">Como salvar dados usando o SQLite</a>
 
 Salvar dados em um banco de dados é ideal para dados estruturados ou que se repetem, por exemplo, os dados de contato. Esta página supõe que você esteja familiarizado com os bancos de dados SQL em geral e ajuda a começar a trabalhar com bancos de dados SQLite no Android. As APIs necessárias para usar um banco de dados no Android estão disponíveis no pacote android.database.sqlite.
 
@@ -70,6 +65,10 @@ public final class FeedReaderContract {
 ````
 
 ## Implementação referente ao aplicativo
+<p align="center">
+  <img src="/android-app/app-aula-05-06/assets/aula-05-06.gif" alt="Aplicativo referente as aulas 05 e 06" alt="drawing" width="300"/>
+</p>
+
 #### Model
 * UsuarioLembrete
   - private int id;
@@ -245,134 +244,73 @@ public class SecondActivity extends AppCompatActivity {
 }
 ````
 
-### Implementação ChildItemAdapter
+### Implementação DataBaseHandler
 
 ```java
-public class ChildItemAdapter extends RecyclerView.Adapter<ChildItemAdapter.ChildViewHolder> {
-    private List<ChildItem> childItemList;
-
-    public ChildItemAdapter(List<ChildItem> childItemList) {
-        this.childItemList = childItemList;
-    }
-
-    @NonNull
-    @Override
-    public ChildViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.child_item,parent, false);
-        return new ChildViewHolder(view);
+public class DataBaseHandler extends SQLiteOpenHelper {
+    public DataBaseHandler(@Nullable Context context) {
+        super(context, Util.DATABASE_NAME, null, Util.DATABASE_VERSION);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ChildViewHolder holder, int position) {
-        ChildItem childItem = childItemList.get(position);
-        holder.childItemTitle.setText(childItem.getChildItemTitle());
-        holder.childItemTitle.setText("IMDb: " + childItem.getChildItemRate());
+    public void onCreate(SQLiteDatabase sqLiteDb) {
+        String CREATE_NOTE_TABLE = "CREATE TABLE " + Util.TABLE_NAME + " ("
+                + Util.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "
+                + Util.KEY_NAME + " TEXT, "
+                + Util.KEY_NOTE + " TEXT "
+                + " );";
+        Log.d("SQL_Create", "Executando: " + CREATE_NOTE_TABLE);
+        sqLiteDb.execSQL(CREATE_NOTE_TABLE);
+
     }
 
     @Override
-    public int getItemCount() {
-        return childItemList.size();
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        String DROP_TABLE = "DROP TABLE IF EXISTS " + Util.TABLE_NAME + ";";
+        db.execSQL(DROP_TABLE, new String[]{Util.DATABASE_NAME});
+        onCreate(db);
     }
 
-    class ChildViewHolder extends RecyclerView.ViewHolder {
-        TextView childItemTitle;
-        TextView childItemRate;
-        public ChildViewHolder(@NonNull View itemView) {
-            super(itemView);
-            childItemTitle = itemView.findViewById(R.id.child_item_title);
-            childItemRate = itemView.findViewById(R.id.child_item_rate);
+    public void criarTabela(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        String CREATE_NOTE_TABLE = "CREATE TABLE "+ Util.TABLE_NAME + " ("
+                + Util.KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT , "
+                + Util.KEY_NAME + " TEXT, "
+                + Util.KEY_NOTE + " TEXT "
+                + " );";
+        Log.d("SQL_Create", "Executando: " + CREATE_NOTE_TABLE);
+        db.execSQL(CREATE_NOTE_TABLE);
+    }
+
+    public void dropDB(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Log.d("SQL_Drop", "Apagando tudo.. ");
+        String DROP_TABLE = "DROP TABLE IF EXISTS " + Util.TABLE_NAME + ";";
+        db.execSQL(DROP_TABLE);
+    }
+
+    public void addLembrete(UsuarioLembrete nota) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String insertSQL = "INSERT INTO "+Util.TABLE_NAME+
+                "("+ Util.KEY_NAME +","+ Util.KEY_NOTE +") VALUES " +
+                "('"+ nota.getNomeCompleto() +"','"+ nota.getLembrete() +"');";
+        db.execSQL(insertSQL);
+        Log.d("SQL_Insert", "Inseri o contato: " + nota.getNomeCompleto());
+        db.close();
+    }
+
+    public String getLembretes(String nomeChave) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        String consulta = "SELECT * FROM "+Util.TABLE_NAME+" WHERE "+Util.KEY_NAME+" = '"+ nomeChave+"';";
+        Log.d("SQL_Retrieve", "Fazendo a consulta "+consulta);
+        Cursor cursor = db.rawQuery(consulta, null);
+        String lembretes = "";
+        Log.d("SQL_Retrieve", "Pedindo o contato.." + cursor.getCount());
+        while (cursor.moveToNext()) {
+            lembretes = lembretes + cursor.getString(2);
+            Log.d("SQL_Retrieve", "Recuperei o lembrete: " + cursor.getString(2));
         }
-    }
+        return lembretes;
+    };
 }
 ````
-
-### Aula07.2 - WebServices usando lib Volley:  <a href="https://google.github.io/volley/request-custom.html" title="google.github.io"> Como Implementar uma solicitação personalizada </a>
-<p align="center">
-  <img src="/android-app/app-aula-07/assets/WebServiceVolley/webservice_volley.gif" alt="Webservice Volley." alt="drawing" width="300"/>
-</p>
- 
- ```java
- public class MainActivity extends AppCompatActivity {
-    Button button;
-    ImageView imvFoto;
-    TextView txvNomeCompleto;
-    TextView txvEmail;
-    TextView txvEndereco;
-    TextView txvDtNascimento;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        //Criando as instancias dos objetos do layout da tela principal
-        button = findViewById(R.id.button);
-        imvFoto = findViewById(R.id.imageView);
-        txvNomeCompleto = findViewById(R.id.txvNome);
-        txvEmail = findViewById(R.id.txvEmail);
-        txvEndereco = findViewById(R.id.txvEndereco);
-        txvDtNascimento = findViewById(R.id.txvDataNascimento);
-        //Evento para ouvir o click do botão
-        button.setOnClickListener(view -> jsonParseString());
-    }
-
-    private void jsonParseString() {
-        String url = "https://randomuser.me/api";
-        JsonObjectRequest request = new JsonObjectRequest(
-                Request.Method.GET,
-                url,
-                null,
-                response -> {
-                    //Objeto principal do Json
-                    JSONArray jArray;
-                    //SubObjetos do Json
-                    JSONObject jObject, jNome, jLocalizacao, jRua, jDtNascimento, jUrl;
-                    //trantamento de exceção
-                    try {
-                        //Pegando a Lista Results
-                        jArray = response.getJSONArray("results");
-                        //Pegando o primeiro item da lista
-                        jObject = jArray.getJSONObject(0);
-                        //Foto usuário
-                        jUrl = (jObject.getJSONObject("picture"));
-                        Picasso.get().load(jUrl.getString("large")).into(imvFoto);
-                        //Nome Completo
-                        jNome = (jObject.getJSONObject("name"));
-                        txvNomeCompleto.setText(
-                                "Nome Completo\n" + jNome.getString("first") + " " +
-                                        jNome.getString("last")
-                        );
-                        //E-mail
-                        txvEmail.setText(
-                                "E-mail\n" + jObject.getString("email")
-                        );
-                        //Endereço Completo
-                        jLocalizacao = (jObject.getJSONObject("location"));
-                        jRua = jLocalizacao.getJSONObject("street");
-                        txvEndereco.setText(
-                                "Endereço\n" +
-                                        jRua.getString("name") + ", " +
-                                        jRua.getString("number") + ", " +
-                                        jLocalizacao.getString("city") + "/" +
-                                        jLocalizacao.getString("state") + ", " +
-                                        jLocalizacao.getString("country")
-                        );
-                        //Data de Nascimento e Idade
-                        jDtNascimento = (jObject.getJSONObject("dob"));
-                        txvDtNascimento.setText(
-                                "Data de Nascimento\n" +
-                                        jDtNascimento.getString("date").split("T")[0] +
-                                        "\nIdade: " + jDtNascimento.getString("age")
-                        );
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                },
-                error -> {
-                    Toast.makeText(this, "That didn't work!", Toast.LENGTH_SHORT).show();
-                }
-        );
-        //Padrão de Projeto Singleton para ter uma única requisição.
-        MySingleton.getInstance(this.getApplicationContext()).addToRequestQueue(request);
-    }
-}
- ````
