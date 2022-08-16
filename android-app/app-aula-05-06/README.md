@@ -1,112 +1,219 @@
 # Mobile Android
-## ./android-app/app-aula-07: RecyclerViews e WebServices usando lib Volley
-### Aula07.1 - RecyclerViews: <a href="https://developer.android.com/guide/topics/ui/layout/recyclerview?hl=pt-br" title="developer.android.com">Como criar listas dinâmicas com o RecyclerView  </a>
- 
-O RecyclerView facilita e torna eficiente a exibição de grandes conjuntos de dados. Você fornece os dados e define a aparência de cada item, e a biblioteca RecyclerView, quando necessário, cria os elementos dinamicamente. Como o nome indica, recicla esses elementos individuais. Quando um item rola para fora da tela, o RecyclerView não destrói a visualização dele. Em vez disso, o RecyclerView reutiliza a visualização para novos itens que passaram a aparecer na tela. Isso melhora muito o desempenho, aperfeiçoando a capacidade de resposta do app e reduzindo o consumo de energia.
-
-### Etapas para implementar o RecyclerView
-Se você quiser usar o RecyclerView, é necessário realizar algumas ações. Elas serão discutidas em detalhes nas seções a seguir.
-
-* Em primeiro lugar, decida como será a lista ou a grade. Em geral, você poderá usar um dos gerenciadores de layout padrão da biblioteca RecyclerView.
-
-* Crie a aparência e o comportamento de cada elemento da lista. Com base nisso, estenda a classe ViewHolder. A versão do ViewHolder fornece toda a funcionalidade para os itens da lista. O fixador de visualização é um wrapper em torno de uma View, e essa visualização é gerenciada por RecyclerView.
-
-Defina o Adapter que associa seus dados às visualizações ViewHolder.
-
-
+## ./android-app/: Aplicativo referente as aulas 05 e 06
 <p align="center">
-  <img src="/android-app/app-aula-07/assets/MyAppRecyclerView/recycler_view.gif" alt="RecyclerViews" alt="drawing" width="300"/>
+  <img src="/android-app/app-aula-05-06/assets/aula-05-06.gif" alt="Aplicativo referente as aulas 05 e 06" alt="drawing" width="300"/>
 </p>
 
-### Implementação RecyclerView
+### Aula-05: Android Studio: Layout, Resources and Activities
+#### Layout: <a href="https://developer.android.com/guide/topics/ui/declaring-layout?hl=pt-br" title="developer.android.com">Layout Visão Geral</a>
+O layout define a estrutura de uma interface do usuário no aplicativo, como acontece na atividade. Todos os elementos do layout são criados usando a hierarquia de objetos View e ViewGroup. A View geralmente desenha algo que o usuário pode ver e com que pode interagir. Já um ViewGroup é um contêiner invisível que define a estrutura do layout para View e outros objetos ViewGroup
+Os objetos View geralmente são chamados de "widgets" e podem ser uma das muitas subclasses, como Button ou TextView. Os objetos ViewGroup geralmente são chamados de layouts e podem ser de um dos muitos tipos que fornecem uma estrutura de layout diferente, como LinearLayout ou ConstraintLayout .
+
+Um layout pode ser declarado de duas maneiras:
+
+Declarar elementos da IU em XML. O Android fornece um vocabulário XML direto que corresponde às classes e subclasses de visualização, como as de widgets e layouts.
+Também é possível usar o Layout Editor do Android Studio para criar o layout XML usando uma interface de arrastar e soltar.
+
+Instanciar elementos do layout no momento da execução. O aplicativo pode criar objetos View e ViewGroup (e processar suas propriedades) programaticamente.
+Ao declarar a IU no XML, é possível separar a apresentação do seu aplicativo do código que controla o comportamento dele. O uso de arquivos XML também facilita conseguir layouts diferentes para diferentes orientações e tamanhos de tela. Isso é discutido em Compatibilidade com diferentes tamanhos de tela.
+
+A biblioteca do Android oferece flexibilidade para usar um ou ambos os métodos para criar a IU do seu aplicativo. Por exemplo, é possível declarar os layouts padrão do aplicativo em XML e, em seguida, modificar o layout no momento da execução.
+
+
+#### Parcelables e pacotes : <a href="https://developer.android.com/guide/components/activities/parcelables-and-bundles?hl=pt-br" title="developer.android.com">Como enviar dados entre atividades</a>
+Quando um app cria um objeto Intent para usar em startActivity(android.content.Intent) ao iniciar uma nova atividade, o app pode transmitir parâmetros usando o método putExtra(java.lang.String, java.lang.String).
+
+O snippet de código a seguir mostra um exemplo de como realizar essa operação.
+ ```java
+    Bundle dadosConta = new Bundle();
+    dadosConta.putString("nome", valorNome.getText().toString());
+    dadosConta.putString("acumulado", displayValor.getText().toString());
+    Intent intent = new Intent(this, MyActivity.class);
+    intent.putExtra(dadosConta);
+    // ...
+    startActivity(intent);
+ ````
+O SO organiza o Bundle subjacente do intent. Em seguida, o SO cria a nova atividade, separa os dados e transmite o intent para a nova atividade.
+
+Recomendamos que você use a classe Bundle para definir primitivos conhecidos no SO em objetos Intent. A classe Bundle é altamente otimizada para empacotar e desempacotar usando lotes.
+
+Em alguns casos, você pode precisar de um mecanismo para envio de objetos compostos ou complexos entre as atividades. Nessas situações, a classe personalizada precisa implementar o parcelable e fornecer o método writeToParcel(android.os.Parcel, int) apropriado. Ela também precisa fornecer um campo não nulo chamado CREATOR que implementa a interface Parcelable.Creator, cujo método createFromParcel() é usado para converter o Parcel de volta ao objeto atual. Para mais informações, consulte a documentação de referência do objeto Parcelable.
+
+Ao enviar dados por meio de um intent, tenha o cuidado de limitar o tamanho dos dados a alguns KB. Enviar muitos dados pode fazer com que o sistema gere uma exceção TransactionTooLargeException.
+
+### Aula-06: Android Studio: Intents e SQLite
 
 #### Model
-* ParentItem
-  - private String parentItemTitle;
-  - private List<ChildItem> childItemList;
-* ChildItem
-  - private String childItemTitle;
-  - private int childItemRate;
- 
+* UsuarioLembrete
+  - private int id;
+  - private String nomeCompleto;
+  - private String lembrete;
+  
+  ### Implementação Tela Principal
+
 ```java
 public class MainActivity extends AppCompatActivity {
+    private static final String TAG = MainActivity.class.getName();
+    private Button botaoIncrementa;
+    private Button botaoProxTela;
+    private TextView displayValor;
+    private EditText valorEntrada;
+    private EditText valorNome;
+    private int acumulador;
+    private int valor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Instacia todos os componentes da tela principal
         setContentView(R.layout.activity_main);
-        RecyclerView parentRecyclerView = findViewById(R.id.parent_recyclerview);
-        //Instacia o gerenciador e o adapter principal da list pai.
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        ParentItemAdapter parentItemAdapter = new ParentItemAdapter(parentItemList());
-        //Adiciona o adpater na RecyclerView
-        parentRecyclerView.setAdapter(parentItemAdapter);
-        //Adiciona a RecyclerView no layout gerenciador
-        parentRecyclerView.setLayoutManager(layoutManager);
+        botaoIncrementa = findViewById(R.id.botaoIncrementa);
+        botaoProxTela = findViewById(R.id.btnSalvar);
+        displayValor = findViewById(R.id.displayValorAcumulado);
+        valorEntrada = findViewById(R.id.enterNumber);
+        valorNome = findViewById(R.id.enterName);
+        valor = Integer.parseInt(getString(R.string.valor));
+        setAcumulador(valor);
+        //Evento que ouvi o click no botão Enter
+        valorEntrada.setOnKeyListener((view, keyCode, keyEvent) -> {
+            if (keyCode == KeyEvent.KEYCODE_ENTER) {
+                this.incrementaValor(view);
+                return true;
+            }
+            return false;
+        });
+        //Evento que ouvi o Focus no EditText do valor a ser acumulado
+        valorEntrada.setOnFocusChangeListener((v, hasFocus)-> {
+            if(hasFocus){
+                v.setBackgroundResource(R.color.my_color);
+                Toast.makeText(getBaseContext(), "Foi alterado a cor da caixa de texto!",
+                        Toast.LENGTH_SHORT).show();
+            }else{
+                v.setBackgroundResource(R.color.purple_200);
+            }
+        });
     }
-    //Adicionar os itens pais na lista
-    private List<ParentItem> parentItemList() {
-        List<ParentItem> parentItemList = new ArrayList<>();
-        for (int i = 1; i <= 5; i++) {
-            parentItemList.add(new ParentItem("Titulo Faixa " + i, childItemList()));
-        }
-        return parentItemList;
+    //Recebo o focus na caixa de texto valor
+    @Override
+    protected void onResume() {
+        super.onResume();
+        valorEntrada.requestFocus();
     }
-    //Adicionar os itens filhos na lista
-    private List<ChildItem> childItemList() {
-        List<ChildItem> childItemList = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
-            childItemList.add(new ChildItem("Item da faixa" + i, 10));
+
+    //Enviar os dados do usuário para outra tela através Map usando um Bundle
+    public void enviarDados(View v){
+        if(valorNome.getText().toString().isEmpty()){
+            Toast.makeText(getBaseContext(), "Informe um nome!",
+                    Toast.LENGTH_SHORT).show();
+        }else {
+            Bundle dadosConta = new Bundle();
+            dadosConta.putString("nome", valorNome.getText().toString());
+            dadosConta.putString("acumulado", displayValor.getText().toString());
+            valorNome.setText("");
+            Intent intent = new Intent(this, SecondActivity.class);
+            intent.putExtras(dadosConta);
+            startActivity(intent);
         }
-        return childItemList;
+    }
+    //Acumula a soma dos valores informados
+    public void incrementaValor(View v) {
+        if(!valorEntrada.getText().toString().isEmpty()) {
+            displayValor.setBackgroundResource(R.color.my_color);
+            acumulador += Integer.parseInt(valorEntrada.getText().toString()) ;
+            displayValor.setText("" + acumulador);
+            valorEntrada.setText("");
+        }
+    }
+
+    public void setAcumulador(int acumulador) {
+        this.acumulador = acumulador;
     }
 }
 ````
-### Implementação ParentItemAdapter
+  
+### Implementação Tela Secundária para receber os dados do usuário e cadastrar os lembretes
 
 ```java
-public class ParentItemAdapter extends RecyclerView.Adapter<ParentItemAdapter.ParentViewHolder> {
-    private RecyclerView.RecycledViewPool viewPool = new RecyclerView.RecycledViewPool();
-    private List<ParentItem> itemList;
+public class SecondActivity extends AppCompatActivity {
+    private Button bntSalvar;
+    private CheckBox chbDropCheck;
+    private TextView txvDadosUsuario;
+    private TextView edtLembreteList;
+    private EditText edtLembrete;
 
-    public ParentItemAdapter(List<ParentItem> itemList) {
-        this.itemList = itemList;
-    }
+    private DataBaseHandler db;
+    private String nomeChave;
 
-    @NonNull
-    @Override
-    public ParentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.parent_item, parent, false);
-        return new ParentViewHolder(view);
-    }
+    private Bundle dadosRecedido;
 
     @Override
-    public void onBindViewHolder(@NonNull ParentViewHolder holder, int position) {
-        ParentItem parentItem = itemList.get(position);
-        holder.parentItemTitle.setText(parentItem.getParentItemTitle());
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //Instacia todos os componentes da tela
+        setContentView(R.layout.activity_second);
+        edtLembrete = findViewById(R.id.edtLembrete);
+        bntSalvar = findViewById(R.id.btnSalvar);
+        edtLembreteList = findViewById(R.id.edtLembreteList);
+        chbDropCheck = findViewById(R.id.chbDropCheck);
+        txvDadosUsuario = findViewById(R.id.txvDadosUsuario);
+        //Cria a instancia do banco SQLite
+        this.db = new DataBaseHandler(this);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(holder.childRecycleView.getContext(), LinearLayoutManager.HORIZONTAL, false);
-        layoutManager.setInitialPrefetchItemCount(parentItem.getChildItemList().size());
+        //Pega os dados do usuário via Map através do Bundle
+        dadosRecedido =  getIntent().getExtras();
+        setNomeChave(dadosRecedido.getString("nome"));
+        txvDadosUsuario.setText("Olá " + dadosRecedido.getString("nome") +
+                "\nSeu saldo em conta: " + dadosRecedido.getString("acumulado") +
+                "\nSua Lista de Lembretes");
+        bntSalvar.setOnClickListener(view -> {
+            salvarLembrete();
+            edtLembrete.requestFocus();
+        });
 
-        ChildItemAdapter childItemAdapter = new ChildItemAdapter(parentItem.getChildItemList());
-        holder.childRecycleView.setLayoutManager(layoutManager);
-        holder.childRecycleView.setAdapter(childItemAdapter);
-        holder.childRecycleView.setRecycledViewPool(viewPool);
+        atualizaCaixaTexto();
     }
-
-    @Override
-    public int getItemCount() {
-        return itemList.size();
-    }
-
-    class ParentViewHolder extends RecyclerView.ViewHolder {
-        private final TextView parentItemTitle;
-        private final RecyclerView childRecycleView;
-
-        public ParentViewHolder(@NonNull View itemView) {
-            super(itemView);
-            parentItemTitle = itemView.findViewById(R.id.parent_item_title);
-            childRecycleView = itemView.findViewById(R.id.child_recyclerview);
+    //Salva os lembreta na base de dados SQLite
+    public void salvarLembrete(){
+        if (this.getChbDropCheck().isChecked()) {
+            db.dropDB();
+            db.criarTabela();
+            this.finish(); //volta para a tela anterior!
+        } else if(!edtLembrete.getText().toString().isEmpty()){
+            UsuarioLembrete lembrete = new UsuarioLembrete();
+            lembrete.setNomeCompleto(this.getNomeChave());
+            lembrete.setLembrete(this.getEdtLembrete().getText().toString() + "\n");
+            db.addLembrete(lembrete);
+            this.getEdtLembrete().setText("");
+            this.atualizaCaixaTexto();
+        }else{
+            Toast.makeText(getBaseContext(), "Informe o lembrete!!!",
+                    Toast.LENGTH_SHORT).show();
         }
+    }
+    //Atualiza a caixa textview com as lista de lembretes
+    private void atualizaCaixaTexto() {
+        String resposta = db.getLembretes(this.getNomeChave());
+        this.getEdtLembreteList().setText(resposta);
+    }
+
+    public CheckBox getChbDropCheck() {
+        return chbDropCheck;
+    }
+
+    public TextView getEdtLembreteList() {
+        return edtLembreteList;
+    }
+
+    public EditText getEdtLembrete() {
+        return edtLembrete;
+    }
+
+    public String getNomeChave() {
+        return nomeChave;
+    }
+
+    public void setNomeChave(String nomeChave) {
+        this.nomeChave = nomeChave;
     }
 }
 ````
