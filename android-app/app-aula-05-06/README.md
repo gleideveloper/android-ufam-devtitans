@@ -1,5 +1,9 @@
 # Mobile Android
 ## ./android-app/: Aplicativo referente as aulas 05 e 06
+<p align="center">
+  <img src="/android-app/app-aula-05-06/assets/aula-05-06.gif" alt="Aplicativo referente as aulas 05 e 06" alt="drawing" width="300"/>
+</p>
+
 ### Aula-05: Layout, Resources and Activities
 #### Layout: <a href="https://developer.android.com/guide/topics/ui/declaring-layout?hl=pt-br" title="developer.android.com">Layout Visão Geral</a>
 O layout define a estrutura de uma interface do usuário no aplicativo, como acontece na atividade. Todos os elementos do layout são criados usando a hierarquia de objetos View e ViewGroup. A View geralmente desenha algo que o usuário pode ver e com que pode interagir. Já um ViewGroup é um contêiner invisível que define a estrutura do layout para View e outros objetos ViewGroup
@@ -65,10 +69,6 @@ public final class FeedReaderContract {
 ````
 
 ## Implementação referente ao aplicativo
-<p align="center">
-  <img src="/android-app/app-aula-05-06/assets/aula-05-06.gif" alt="Aplicativo referente as aulas 05 e 06" alt="drawing" width="300"/>
-</p>
-
 #### Model
 * UsuarioLembrete
   - private int id;
