@@ -1,21 +1,16 @@
 # Mobile Android
-## ./android-app/app-aula-07: RecyclerViews e WebServices usando lib Volley
-### Aula07.1 - RecyclerViews: <a href="https://developer.android.com/guide/topics/ui/layout/recyclerview?hl=pt-br" title="developer.android.com">Como criar listas dinâmicas com o RecyclerView  </a>
+## ./android-app/: Aplicativo referente as aulas 05 e 06
+### Aula-05: Android Studio: Layout, Resources and Activities
+#### Layout: <a href="https://developer.android.com/guide/topics/ui/declaring-layout?hl=pt-br" title="developer.android.com">Layout Visão Geral</a>
+
+
+#### Parcelables e pacotes : <a href="https://developer.android.com/guide/components/activities/parcelables-and-bundles?hl=pt-br" title="developer.android.com">Como enviar dados entre atividades</a>
  
-O RecyclerView facilita e torna eficiente a exibição de grandes conjuntos de dados. Você fornece os dados e define a aparência de cada item, e a biblioteca RecyclerView, quando necessário, cria os elementos dinamicamente. Como o nome indica, recicla esses elementos individuais. Quando um item rola para fora da tela, o RecyclerView não destrói a visualização dele. Em vez disso, o RecyclerView reutiliza a visualização para novos itens que passaram a aparecer na tela. Isso melhora muito o desempenho, aperfeiçoando a capacidade de resposta do app e reduzindo o consumo de energia.
-
-### Etapas para implementar o RecyclerView
-Se você quiser usar o RecyclerView, é necessário realizar algumas ações. Elas serão discutidas em detalhes nas seções a seguir.
-
-* Em primeiro lugar, decida como será a lista ou a grade. Em geral, você poderá usar um dos gerenciadores de layout padrão da biblioteca RecyclerView.
-
-* Crie a aparência e o comportamento de cada elemento da lista. Com base nisso, estenda a classe ViewHolder. A versão do ViewHolder fornece toda a funcionalidade para os itens da lista. O fixador de visualização é um wrapper em torno de uma View, e essa visualização é gerenciada por RecyclerView.
-
-Defina o Adapter que associa seus dados às visualizações ViewHolder.
+### Aula-06: Android Studio: Intents e SQLite
 
 
 <p align="center">
-  <img src="/android-app/app-aula-07/assets/MyAppRecyclerView/recycler_view.gif" alt="RecyclerViews" alt="drawing" width="300"/>
+  <img src="/android-app/app-aula-05-06/assets/aula-05-06.gif" alt="Aplicativo referente as aulas 05 e 06" alt="drawing" width="300"/>
 </p>
 
 ### Implementação RecyclerView
