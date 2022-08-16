@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         }
     }
-
+    //Acumula a soma dos valores informados
     public void incrementaValor(View v) {
         if(!valorEntrada.getText().toString().isEmpty()) {
             displayValor.setBackgroundResource(R.color.my_color);
@@ -82,26 +82,6 @@ public class MainActivity extends AppCompatActivity {
             displayValor.setText("" + acumulador);
             valorEntrada.setText("");
         }
-    }
-
-    public Button getBotaoIncrementa() {
-        return botaoIncrementa;
-    }
-
-    public void setBotaoIncrementa(Button botaoIncrementa) {
-        this.botaoIncrementa = botaoIncrementa;
-    }
-
-    public TextView getDisplayValor() {
-        return displayValor;
-    }
-
-    public void setDisplayValor(TextView displayValor) {
-        this.displayValor = displayValor;
-    }
-
-    public int getAcumulador() {
-        return acumulador;
     }
 
     public void setAcumulador(int acumulador) {

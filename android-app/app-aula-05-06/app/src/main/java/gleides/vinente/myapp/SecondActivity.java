@@ -28,6 +28,7 @@ public class SecondActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Instacia todos os componentes da tela
         setContentView(R.layout.activity_second);
         edtLembrete = findViewById(R.id.edtLembrete);
         bntSalvar = findViewById(R.id.btnSalvar);
@@ -50,7 +51,7 @@ public class SecondActivity extends AppCompatActivity {
 
         atualizaCaixaTexto();
     }
-
+    //Salva os lembreta na base de dados SQLite
     public void salvarLembrete(){
         if (this.getChbDropCheck().isChecked()) {
             db.dropDB();
@@ -68,50 +69,22 @@ public class SecondActivity extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         }
     }
-
+    //Atualiza a caixa textview com as lista de lembretes
     private void atualizaCaixaTexto() {
         String resposta = db.getLembretes(this.getNomeChave());
         this.getEdtLembreteList().setText(resposta);
-    }
-
-    public Button getBntSalvar() {
-        return bntSalvar;
-    }
-
-    public void setBntSalvar(Button bntSalvar) {
-        this.bntSalvar = bntSalvar;
     }
 
     public CheckBox getChbDropCheck() {
         return chbDropCheck;
     }
 
-    public void setChbDropCheck(CheckBox chbDropCheck) {
-        this.chbDropCheck = chbDropCheck;
-    }
-
-    public TextView getTxvDadosUsuario() {
-        return txvDadosUsuario;
-    }
-
-    public void setTxvDadosUsuario(TextView txvDadosUsuario) {
-        this.txvDadosUsuario = txvDadosUsuario;
-    }
-
     public TextView getEdtLembreteList() {
         return edtLembreteList;
     }
 
-    public void setEdtLembreteList(TextView edtLembreteList) {
-        this.edtLembreteList = edtLembreteList;
-    }
-
     public EditText getEdtLembrete() {
         return edtLembrete;
-    }
-
-    public void setEdtLembrete(EditText edtLembrete) {
-        this.edtLembrete = edtLembrete;
     }
 
     public String getNomeChave() {
