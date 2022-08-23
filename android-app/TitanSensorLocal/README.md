@@ -1,5 +1,4 @@
 # Mobile Android
-/TitanSensorLocal
 
 ## ./android-app/TitanSensorLocal: Sensores e Localização
  <p align="center">
