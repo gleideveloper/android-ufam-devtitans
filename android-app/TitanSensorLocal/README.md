@@ -1,34 +1,50 @@
 # Mobile Android
-## ./android-app/app-aula-07: RecyclerViews e WebServices usando lib Volley
-### Aula07.1 - RecyclerViews: <a href="https://developer.android.com/guide/topics/ui/layout/recyclerview?hl=pt-br" title="developer.android.com">Como criar listas dinâmicas com o RecyclerView  </a>
- 
-O RecyclerView facilita e torna eficiente a exibição de grandes conjuntos de dados. Você fornece os dados e define a aparência de cada item, e a biblioteca RecyclerView, quando necessário, cria os elementos dinamicamente. Como o nome indica, recicla esses elementos individuais. Quando um item rola para fora da tela, o RecyclerView não destrói a visualização dele. Em vez disso, o RecyclerView reutiliza a visualização para novos itens que passaram a aparecer na tela. Isso melhora muito o desempenho, aperfeiçoando a capacidade de resposta do app e reduzindo o consumo de energia.
+/TitanSensorLocal
 
-### Etapas para implementar o RecyclerView
-Se você quiser usar o RecyclerView, é necessário realizar algumas ações. Elas serão discutidas em detalhes nas seções a seguir.
-
-* Em primeiro lugar, decida como será a lista ou a grade. Em geral, você poderá usar um dos gerenciadores de layout padrão da biblioteca RecyclerView.
-
-* Crie a aparência e o comportamento de cada elemento da lista. Com base nisso, estenda a classe ViewHolder. A versão do ViewHolder fornece toda a funcionalidade para os itens da lista. O fixador de visualização é um wrapper em torno de uma View, e essa visualização é gerenciada por RecyclerView.
-
-Defina o Adapter que associa seus dados às visualizações ViewHolder.
-
-### Aula07.2 - WebServices usando lib Volley:  <a href="https://google.github.io/volley/request-custom.html" title="google.github.io"> Como Implementar uma solicitação personalizada </a>
-
-<p align="center">
+## ./android-app/TitanSensorLocal: Sensores e Localização
+ <p align="center">
   <img src="/android-app/TitanSensorLocal/assets/SensorAndGeoLocation.gif" alt="RecyclerViews" alt="drawing" width="300"/>
 </p>
 
-### Implementação RecyclerView
-
-#### Model
-* ParentItem
-  - private String parentItemTitle;
-  - private List<ChildItem> childItemList;
-* ChildItem
-  - private String childItemTitle;
-  - private int childItemRate;
+### Aula08.1 - Sensores: <a href="https://developer.android.com/guide/topics/sensors/sensors_motion?hl=pt" title="developer.android.com">Sensores de movimento</a>
  
+A plataforma Android fornece vários sensores que permitem a você monitorar o movimento de um dispositivo.
+
+As possíveis arquiteturas dos sensores variam de acordo com o tipo de sensor:
+
+* Os sensores de gravidade, aceleração linear, vetor de rotação, movimento significativo, contador de passos e detector de passos têm hardware ou software como base.
+* Os sensores de acelerômetro ou giroscópio sempre têm hardware como base.
+A maioria dos dispositivos Android tem um acelerômetro e muitos deles agora incluem um giroscópio. A disponibilidade dos sensores com base em software é mais variável porque eles costumam depender de um ou mais sensores de hardware para derivar os dados. Dependendo do dispositivo, esses sensores com base em software podem derivar os dados do acelerômetro e magnetômetro ou do giroscópio.
+
+Os sensores de movimento são úteis para monitorar o movimento do dispositivo, como inclinação, trepidação, rotação ou giro. O movimento geralmente é um reflexo de entrada direta do usuário. Por exemplo, alguém pilotando um carro ou controlando uma bola em um jogo. No entanto, também pode ser um reflexo do ambiente físico onde o dispositivo se encontra, como enquanto o usuário dirige um carro. No primeiro caso, você está monitorando o movimento relativo ao frame de referência do dispositivo ou do aplicativo. Já na segunda situação, o movimento monitorado é relativo ao frame de referência do mundo. Os sensores de movimento por si só não costumam ser usados para monitorar a posição do dispositivo. No entanto, eles podem ser usados com outros sensores, como o sensor de campo geomagnético, para determinar a posição de um dispositivo relativa ao frame de referência do mundo (consulte Sensores de posição para maiores informações).
+
+### Aula08.2 - Última Localização: <a href="https://developer.android.com/training/location/retrieve-current?hl=pt-br" title="developer.android.com">Ver a última localização conhecida</a>
+
+Usando as APIs de localização do Google Play Services, seu app pode solicitar a última localização conhecida do dispositivo do usuário. Na maioria dos casos, o que interessa é a localização atual do usuário, que geralmente é equivalente à última localização conhecida do dispositivo.
+
+Use especificamente a API Fused Location Provider para recuperar a última localização conhecida do dispositivo. Essa é uma das APIs de localização do Google Play Services. Ela gerencia a tecnologia de localização e fornece uma API simples para que seja possível especificar requisitos de alto nível, como alta precisão ou baixo consumo de energia. Também otimiza o uso da bateria do dispositivo.
+
+Esta lição mostra como criar uma única solicitação para a localização de um dispositivo usando o método getLastLocation() no provedor de localização combinada.
+
+Depois de criar o cliente de Serviços de localização, você poderá ver a última localização conhecida do dispositivo de um usuário. Quando seu app estiver conectado a ele, você poderá usar o método getLastLocation() do provedor de localização combinada para recuperar a localização do dispositivo. A precisão da localização retornada por essa chamada é determinada pela configuração de permissão que está no manifesto do app, conforme descrito no guia sobre como solicitar permissões de localização.
+
+Para solicitar a última localização conhecida, chame o método getLastLocation(). O snippet de código a seguir ilustra a solicitação e um processamento simples da resposta:
+
+```java
+fusedLocationClient.getLastLocation()
+        .addOnSuccessListener(this, new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                // Got last known location. In some rare situations this can be null.
+                if (location != null) {
+                    // Logic to handle location object
+                }
+            }
+        });
+````
+
+### Implementação Sensor Acelerômetro e Última Localização
+
 ```java
 public class MainActivity extends AppCompatActivity {
   private ToggleButton toggleButton;
