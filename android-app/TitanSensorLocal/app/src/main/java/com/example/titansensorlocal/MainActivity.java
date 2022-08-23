@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Criar as instancias dos objetos na tela
         setContentView(R.layout.activity_main);
         deviceType = android.os.Build.DEVICE;
         latitudeTextView = findViewById(R.id.latTextView);
@@ -64,9 +65,11 @@ public class MainActivity extends AppCompatActivity {
         updateLocation = findViewById(R.id.updateLocation);
         toggleButton = findViewById(R.id.onOffFlashlight);
 
+        //Instancia um serviço do gerenciador do senso de acelerômetro
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         Sensor sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
+        //Evento para ouvir a mudança no sensor de acelerômetro
         listener = new SensorEventListener() {
             @Override
             public void onSensorChanged(SensorEvent event) {
@@ -85,7 +88,10 @@ public class MainActivity extends AppCompatActivity {
             public void onAccuracyChanged(Sensor sensor, int accuracy) {
             }
         };
+
+        //Registrar o evento do Sensor
         sensorManager.registerListener(listener, sensor, SensorManager.SENSOR_DELAY_NORMAL);
+       //Checa se o Lampada está habilitada
         boolean isFlashAvailable;
         isFlashAvailable = getApplicationContext().getPackageManager()
                 .hasSystemFeature(PackageManager.FEATURE_CAMERA_FRONT);
@@ -94,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         }
         this.setLedStatus(false);
 
+        //Instancia um serviço do gerenciador da camera
         mCameraManager = (CameraManager) getSystemService(Context.CAMERA_SERVICE);
         try {
             //Verifica se o device é AVD ou Físico
@@ -170,6 +177,7 @@ public class MainActivity extends AppCompatActivity {
         this.ledStatus = ledStatus;
     }
 
+    //Get/Set Location
     @SuppressLint("MissingPermission")
     private void getLastLocation() {
         if (checkPermissions()) {
